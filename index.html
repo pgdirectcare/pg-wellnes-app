@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>PG Wellness App</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -18,37 +18,109 @@ html, body {
   background: var(--gray);
   color: var(--text);
   min-height: 100%;
-  overflow-x: hidden;
 }
-.app { max-width: 520px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; background: var(--gray); box-shadow: 0 0 40px rgba(0,0,0,0.1); }
-.hdr { background: var(--blue-dark); border-bottom: 4px solid var(--green); padding: 12px 20px 10px; text-align: center; flex-shrink: 0; position: sticky; top: 0; z-index: 100; }
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--gray);
+  box-shadow: 0 0 40px rgba(0,0,0,0.1);
+  position: relative;
+}
+.hdr {
+  background: var(--blue-dark);
+  border-bottom: 4px solid var(--green);
+  padding: 12px 20px 10px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
 .hdr .brand { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 18px; color: white; }
 .hdr .welcome { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 1px; }
 .hdr .welcome span { color: var(--green); font-weight: 700; }
-.scroll { flex: 1; padding: 14px 14px 90px; }
-.nav { display: flex; background: white; border-top: 1px solid var(--gray-mid); flex-shrink: 0; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); position: sticky; bottom: 0; z-index: 100; }
-.nav-btn { flex: 1; padding: 8px 4px 6px; border: none; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.nav-btn .ni { font-size: 20px; }
+.nav {
+  display: flex;
+  background: white;
+  border-top: 2px solid var(--gray-mid);
+  position: sticky;
+  bottom: 0;
+  z-index: 200;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+.nav-btn { flex: 1; padding: 10px 4px 8px; border: none; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.nav-btn .ni { font-size: 22px; transition: transform 0.15s; }
 .nav-btn .nl { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 10px; color: #a0aec0; }
 .nav-btn.active .nl { color: var(--blue); }
-.nav-btn.active .ni { transform: scale(1.1); }
+.nav-btn.active .ni { transform: scale(1.15); }
+.content { flex: 1; overflow-y: auto; padding: 16px 14px 24px; }
 .tab { display: none; }
 .tab.active { display: block; }
-.card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
-.card-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px; color: var(--blue); margin-bottom: 12px; }
-.onboard { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); border-radius: 20px; padding: 28px 20px; text-align: center; margin-bottom: 14px; }
-.onboard h2 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 22px; color: white; margin-bottom: 8px; }
-.onboard p { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 20px; line-height: 1.5; }
-.onboard input { display: block; width: 100%; padding: 14px 16px; font-size: 16px; font-family: 'Lato', sans-serif; border: none; border-radius: 12px; margin-bottom: 12px; outline: none; color: var(--text); }
-.ob-btn { width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; cursor: pointer; }
+.card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.card-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px; color: var(--blue); margin-bottom: 14px; }
 .field { margin-bottom: 14px; }
 .field label { display: block; font-size: 12px; font-weight: 700; color: var(--gray-dark); margin-bottom: 6px; }
 .field input, .field select { display: block; width: 100%; padding: 13px 14px; font-size: 16px; font-family: 'Lato', sans-serif; color: var(--text); background: var(--gray); border: 2px solid var(--gray-mid); border-radius: 10px; outline: none; -webkit-appearance: none; appearance: none; }
 .field input:focus, .field select:focus { border-color: var(--blue); background: white; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.btn-blue { display: block; width: 100%; padding: 14px; background: var(--blue); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(43,91,168,0.25); }
-.btn-green { display: block; width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(90,173,63,0.25); }
-.btn-ghost { display: block; width: 100%; padding: 12px; background: transparent; border: 2px solid var(--gray-mid); border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; color: var(--gray-dark); cursor: pointer; margin-top: 8px; }
+.btn-green { display: block; width: 100%; padding: 15px; background: var(--green); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(90,173,63,0.3); text-align: center; text-decoration: none; }
+.btn-blue { display: block; width: 100%; padding: 15px; background: var(--blue); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(43,91,168,0.25); text-align: center; text-decoration: none; }
+.btn-dark { display: block; width: 100%; padding: 15px; background: var(--blue-dark); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; margin-top: 8px; }
+.btn-ghost { display: block; width: 100%; padding: 12px; background: transparent; border: 2px solid var(--gray-mid); border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; color: var(--gray-dark); cursor: pointer; margin-top: 8px; text-align: center; }
+.tip { border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
+.tip.blue { background: var(--blue-light); border-left: 4px solid var(--blue); }
+.tip.green { background: var(--green-light); border-left: 4px solid var(--green); }
+.tip h4 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; margin-bottom: 5px; }
+.tip.blue h4 { color: var(--blue); }
+.tip.green h4 { color: var(--green-dark); }
+.tip p { font-size: 12px; color: #4a5568; line-height: 1.5; }
+.tip .badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.tip .badge { background: white; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+.tip.blue .badge { color: var(--blue); }
+.tip.green .badge { color: var(--green-dark); }
+.enc { background: var(--blue-dark); border-radius: 12px; padding: 14px 16px; text-align: center; margin-bottom: 12px; }
+.enc p { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: white; line-height: 1.4; }
+.streak { background: linear-gradient(135deg, var(--blue-dark), #1a3a6e); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.streak .sf { font-size: 30px; flex-shrink: 0; }
+.streak .sv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 26px; color: var(--green); line-height: 1; }
+.streak .sl { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 700; }
+.streak .sm { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.stat-item { background: white; border-radius: 12px; padding: 12px 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.stat-item .sv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 18px; color: var(--blue); line-height: 1; margin-bottom: 3px; }
+.stat-item .sl { font-size: 10px; font-weight: 700; color: #a0aec0; text-transform: uppercase; }
+.hist-toggle { width: 100%; padding: 11px; background: transparent; border: 2px solid var(--gray-mid); border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; color: var(--blue); cursor: pointer; margin-bottom: 12px; }
+.hist-panel { display: none; }
+.hist-panel.show { display: block; }
+.hist-list { max-height: 220px; overflow-y: auto; }
+.hist-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; background: var(--gray); }
+.hist-item.hit { background: var(--green-light); }
+.hist-date { font-size: 11px; font-weight: 700; color: #4a5568; }
+.hist-val { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 13px; color: var(--blue); }
+.ob-screen { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); border-radius: 20px; padding: 28px 20px; text-align: center; margin-bottom: 14px; }
+.ob-screen h2 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 22px; color: white; margin-bottom: 8px; }
+.ob-screen p { font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 20px; line-height: 1.5; }
+.ob-screen input { display: block; width: 100%; padding: 14px 16px; font-size: 16px; font-family: 'Lato', sans-serif; border: none; border-radius: 12px; margin-bottom: 10px; outline: none; color: var(--text); background: white; }
+.ob-screen .ob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.ob-screen .ob-grid input { margin-bottom: 0; }
+.wt-logged-msg { background: var(--green-light); border: 2px solid var(--green); border-radius: 12px; padding: 14px 16px; text-align: center; margin-bottom: 12px; display: none; }
+.wt-logged-msg p { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: var(--green-dark); }
+.reminder { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 12px; color: #92400e; display: none; }
+.wh-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; background: var(--gray); }
+.wh-item.latest-entry { background: var(--blue-light); }
+.wh-date { font-size: 12px; font-weight: 700; color: #4a5568; }
+.wh-val { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; color: var(--blue); }
+.wh-change { font-size: 11px; font-weight: 700; margin-left: 6px; }
+.wh-change.down { color: var(--green); }
+.wh-change.up { color: #e53e3e; }
+.chart-wrap { background: var(--gray); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+.wt-chart { display: flex; align-items: flex-end; gap: 4px; height: 80px; }
+.wbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; height: 100%; justify-content: flex-end; }
+.wbar { width: 100%; border-radius: 3px 3px 0 0; min-height: 3px; background: var(--blue); opacity: 0.7; }
+.wbar.latest { background: var(--green); opacity: 1; }
+.wbar-lbl { font-size: 8px; color: #a0aec0; font-weight: 700; }
 .gender-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .gbtn { display: block; width: 100%; padding: 13px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px; text-align: center; border: 2px solid var(--gray-mid); border-radius: 10px; background: var(--gray); color: var(--gray-dark); cursor: pointer; }
 .gbtn.on { background: var(--blue); border-color: var(--blue); color: white; }
@@ -76,19 +148,8 @@ html, body {
 .pmeal .pv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 24px; color: var(--blue); }
 .pmeal .pl { font-size: 11px; font-weight: 700; color: #a0aec0; }
 .pmeal .pd { font-size: 10px; color: #a0aec0; }
-.tip { border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
-.tip.blue { background: var(--blue-light); border-left: 4px solid var(--blue); }
-.tip.green { background: var(--green-light); border-left: 4px solid var(--green); }
-.tip h4 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; margin-bottom: 4px; }
-.tip.blue h4 { color: var(--blue); }
-.tip.green h4 { color: var(--green-dark); }
-.tip p { font-size: 12px; color: #4a5568; line-height: 1.5; }
-.tip .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.tip .badge { background: white; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
-.tip.blue .badge { color: var(--blue); }
-.tip.green .badge { color: var(--green-dark); }
 .ms-card { background: var(--green-light); border-radius: 14px; padding: 14px; margin-bottom: 12px; border-left: 4px solid var(--green); }
-.ms-card-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: var(--green-dark); margin-bottom: 10px; }
+.ms-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: var(--green-dark); margin-bottom: 10px; }
 .ms-row { display: flex; gap: 10px; margin-bottom: 10px; }
 .ms-item { flex: 1; background: white; border-radius: 10px; padding: 10px; text-align: center; }
 .ms-item .msv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 22px; color: var(--green); }
@@ -118,33 +179,14 @@ html, body {
 .bmi-bar { height: 7px; border-radius: 99px; background: linear-gradient(to right, #63b3ed, #68d391, #f6e05e, #fc8181, #e53e3e); position: relative; margin-bottom: 6px; }
 .bmi-dot { position: absolute; top: -5px; width: 16px; height: 16px; border-radius: 50%; background: var(--blue); border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transform: translateX(-50%); transition: left 0.5s; }
 .bmi-scale { display: flex; justify-content: space-between; font-size: 9px; color: #a0aec0; font-weight: 700; }
-.enc { background: var(--blue-dark); border-radius: 12px; padding: 14px 16px; text-align: center; margin-bottom: 12px; }
-.enc p { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: white; line-height: 1.4; }
-.enc p span { color: var(--green); }
-.reminder { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 12px; color: #92400e; display: flex; align-items: center; gap: 8px; }
-.chart-wrap { background: var(--gray); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
-.chart-title { font-size: 11px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
-.weight-chart { display: flex; align-items: flex-end; gap: 4px; height: 80px; }
-.wbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; height: 100%; justify-content: flex-end; }
-.wbar { width: 100%; border-radius: 3px 3px 0 0; min-height: 3px; background: var(--blue); opacity: 0.7; }
-.wbar.latest { background: var(--green); opacity: 1; }
-.wbar-lbl { font-size: 8px; color: #a0aec0; font-weight: 700; white-space: nowrap; }
-.wh-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; background: var(--gray); }
-.wh-item.latest-entry { background: var(--blue-light); }
-.wh-date { font-size: 12px; font-weight: 700; color: #4a5568; }
-.wh-val { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; color: var(--blue); }
-.wh-change { font-size: 11px; font-weight: 700; margin-left: 6px; }
-.wh-change.down { color: var(--green); }
-.wh-change.up { color: #e53e3e; }
-.streak { background: linear-gradient(135deg, var(--blue-dark), #1a3a6e); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.streak .sfire { font-size: 30px; flex-shrink: 0; }
-.streak .sval { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 26px; color: var(--green); line-height: 1; }
-.streak .slbl { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 700; }
-.streak .smsg { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-.stat-item { background: white; border-radius: 12px; padding: 12px 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.stat-item .sv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 18px; color: var(--blue); line-height: 1; margin-bottom: 3px; }
-.stat-item .sl { font-size: 10px; font-weight: 700; color: #a0aec0; text-transform: uppercase; }
+.check-row { display: flex; align-items: center; justify-content: space-between; background: var(--gray); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
+.check-row.checked { background: var(--green-light); }
+.check-left { display: flex; align-items: center; gap: 10px; }
+.check-icon { font-size: 22px; }
+.check-text h4 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; color: var(--text); }
+.check-text p { font-size: 11px; color: #a0aec0; }
+.checkmark { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--gray-mid); background: white; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; transition: all 0.2s; }
+.checkmark.done { background: var(--green); border-color: var(--green); color: white; }
 .ring-container { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
 .ring-container svg { transform: rotate(-90deg); }
 .ring-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
@@ -159,14 +201,6 @@ html, body {
 .log-btn { padding: 13px 18px; background: var(--green); color: white; border: none; border-radius: 10px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 15px; cursor: pointer; white-space: nowrap; }
 .day-msg { border-radius: 10px; padding: 10px 12px; font-size: 12px; font-weight: 700; text-align: center; margin-top: 10px; background: var(--blue-light); color: var(--blue); }
 .day-msg.great { background: var(--green-light); color: var(--green-dark); }
-.check-row { display: flex; align-items: center; justify-content: space-between; background: var(--gray); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
-.check-row.checked { background: var(--green-light); }
-.check-left { display: flex; align-items: center; gap: 10px; }
-.check-icon { font-size: 22px; }
-.check-text h4 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; color: var(--text); }
-.check-text p { font-size: 11px; color: #a0aec0; }
-.checkmark { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--gray-mid); background: white; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; transition: all 0.2s; }
-.checkmark.done { background: var(--green); border-color: var(--green); color: white; }
 .schart { display: flex; align-items: flex-end; gap: 2px; height: 70px; }
 .sbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; height: 100%; justify-content: flex-end; }
 .sbar { width: 100%; border-radius: 2px 2px 0 0; min-height: 2px; }
@@ -174,31 +208,23 @@ html, body {
 .sbar.miss { background: var(--gray-mid); }
 .sbar.today { background: var(--blue); }
 .sbar-day { font-size: 8px; color: #a0aec0; font-weight: 700; }
-.hist-list { max-height: 220px; overflow-y: auto; }
-.hist-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; background: var(--gray); }
-.hist-item.hit { background: var(--green-light); }
-.hist-date { font-size: 11px; font-weight: 700; color: #4a5568; }
-.hist-val { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 13px; color: var(--blue); }
-.hist-toggle { width: 100%; padding: 11px; background: transparent; border: 2px solid var(--gray-mid); border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; color: var(--blue); cursor: pointer; margin-bottom: 12px; }
-.hist-panel { display: none; }
-.hist-panel.show { display: block; }
 .prog-hero { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 12px; }
 .prog-hero .ph-name { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
 .prog-hero .ph-lost { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 52px; color: white; line-height: 1; }
 .prog-hero .ph-lbl { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
 .prog-hero .ph-pct { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 22px; color: var(--green); }
 .prog-hero .ph-pct-lbl { font-size: 12px; color: rgba(255,255,255,0.6); }
+.comb-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.comb-stat { background: white; border-radius: 14px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.comb-stat .csv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 22px; color: var(--blue); }
+.comb-stat .csl { font-size: 11px; font-weight: 700; color: #a0aec0; text-transform: uppercase; }
 .badge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.badge-item { background: white; border-radius: 14px; padding: 14px 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); opacity: 0.4; }
+.badge-item { background: white; border-radius: 14px; padding: 14px 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); opacity: 0.35; }
 .badge-item.earned { opacity: 1; border: 2px solid var(--green); }
 .badge-item .bi { font-size: 28px; margin-bottom: 4px; }
 .badge-item .bv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; color: var(--blue); }
 .badge-item .bl { font-size: 11px; color: #a0aec0; font-weight: 700; }
 .badge-item.earned .bv { color: var(--green-dark); }
-.comb-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.comb-stat { background: white; border-radius: 14px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.comb-stat .csv { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 24px; color: var(--blue); }
-.comb-stat .csl { font-size: 11px; font-weight: 700; color: #a0aec0; text-transform: uppercase; }
 .ftr { text-align: center; padding: 14px; font-size: 11px; color: #a0aec0; }
 .ftr strong { color: var(--blue); }
 .ftr a { color: var(--blue); text-decoration: none; }
@@ -210,344 +236,349 @@ html, body {
   <div class="brand">PG Direct Care — Wellness App</div>
   <div class="welcome" id="hdr-welcome">Your Care. Anywhere. When You Need It.</div>
 </div>
-<div class="scroll" id="scroll-area">
-  <!-- ══ TAB 1: WEIGHT ══════════════════════════════ -->
-  <div class="tab active" id="tab-weight">
-    <div id="wt-reminder" style="display:none;" class="reminder">
-      ⚠️ <span id="wt-reminder-msg"></span>
+<div class="content" id="main-content">
+<div class="tab active" id="tab-weight">
+  <div class="reminder" id="wt-reminder">⚠️ <span id="wt-reminder-msg"></span></div>
+  <div class="card">
+    <div class="card-title">⚖️ Log This Week's Weight</div>
+    <div class="field">
+      <label>Current Weight (lbs)</label>
+      <input type="number" id="wt-log-input" placeholder="Enter your weight">
     </div>
+    <button class="btn-blue" id="wt-log-btn">Log My Weight</button>
+    <div style="font-size:11px;color:#a0aec0;text-align:center;margin-top:8px;">💡 Weigh yourself once a week, same time, same conditions.</div>
+  </div>
+  <div class="wt-logged-msg" id="wt-logged-msg">
+    <p>✅ Weight logged! Ready to calculate your macro targets?</p>
+    <button class="btn-green" id="go-to-hub-btn" style="margin-top:10px;">Calculate My Targets →</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-item"><div class="sv" id="wt-stat-lost">--</div><div class="sl">lbs lost</div></div>
+    <div class="stat-item"><div class="sv" id="wt-stat-pct">--</div><div class="sl">% lost</div></div>
+    <div class="stat-item"><div class="sv" id="wt-stat-entries">0</div><div class="sl">weigh-ins</div></div>
+  </div>
+  <div class="streak">
+    <div class="sf">🔥</div>
+    <div>
+      <div class="sv" id="wt-streak">0</div>
+      <div class="sl">Week Streak</div>
+      <div class="sm" id="wt-streak-msg">Log your first weight to start your streak!</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📈 Weight Trend</div>
+    <div class="chart-wrap"><div class="wt-chart" id="wt-chart"></div></div>
+  </div>
+  <button class="hist-toggle" id="wt-hist-btn">📅 View Weight History</button>
+  <div class="hist-panel" id="wt-hist-panel">
     <div class="card">
-      <div class="card-title">⚖️ Log This Week's Weight</div>
+      <div class="card-title">Weight Log</div>
+      <div class="hist-list" id="wt-hist-list"></div>
+    </div>
+  </div>
+  <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a></div>
+</div>
+
+<div class="tab" id="tab-hub">
+  <div id="onboard-section" style="display:none;">
+    <div class="ob-screen">
+      <h2>Welcome to PG Wellness! 🌿</h2>
+      <p>Let's set up your profile. This takes 30 seconds and is saved forever on your device.</p>
+      <input type="text" id="ob-name" placeholder="Your first name">
+      <input type="number" id="ob-weight" placeholder="Your starting weight (lbs)">
+      <input type="number" id="ob-year" placeholder="Your birth year (e.g. 1987)">
+      <div class="ob-grid">
+        <input type="number" id="ob-ft" placeholder="Height — Feet">
+        <input type="number" id="ob-in" placeholder="Inches">
+      </div>
+      <button class="btn-green" id="ob-btn" style="margin-top:4px;">Get Started →</button>
+    </div>
+  </div>
+  <div id="hub-content" style="display:none;">
+    <div class="card">
+      <div class="card-title">📋 Calculate My Targets</div>
+      <div class="field">
+        <label>Biological Sex</label>
+        <div class="gender-row">
+          <button class="gbtn on" id="bm">Male</button>
+          <button class="gbtn" id="bf">Female</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Age <span style="font-size:10px;color:#a0aec0;font-weight:400;">(auto-calculated from birth year)</span></label>
+        <input type="number" id="hub-age" placeholder="Your age">
+      </div>
+      <div class="field">
+        <label>Height</label>
+        <div class="two-col">
+          <input type="number" id="hub-ft" placeholder="Feet">
+          <input type="number" id="hub-in" placeholder="Inches">
+        </div>
+      </div>
       <div class="field">
         <label>Current Weight (lbs)</label>
-        <input type="number" id="wt-log-input" placeholder="Enter your weight">
+        <input type="number" id="hub-wt" placeholder="Enter your weight">
       </div>
-      <button class="btn-blue" id="wt-log-btn">Log My Weight</button>
-      <div style="font-size:11px;color:#a0aec0;text-align:center;margin-top:8px;">💡 Weigh yourself once a week, same time, same conditions for best results.</div>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-item"><div class="sv" id="wt-stat-lost">--</div><div class="sl">lbs lost</div></div>
-      <div class="stat-item"><div class="sv" id="wt-stat-pct">--</div><div class="sl">% lost</div></div>
-      <div class="stat-item"><div class="sv" id="wt-stat-entries">0</div><div class="sl">weigh-ins</div></div>
-    </div>
-    <div class="streak">
-      <div class="sfire">🔥</div>
-      <div>
-        <div class="sval" id="wt-streak">0</div>
-        <div class="slbl">Week Streak</div>
-        <div class="smsg" id="wt-streak-msg">Log your first weight to start your streak!</div>
+      <div class="field">
+        <label>Activity Level</label>
+        <div class="sel-wrap">
+          <select id="hub-act">
+            <option value="">Please select...</option>
+            <option value="1.2">Sedentary — Little to no exercise</option>
+            <option value="1.375">Lightly Active — 1–2 days/week</option>
+            <option value="1.55">Moderately Active — 3–5 days/week</option>
+            <option value="1.725">Very Active — 6–7 days/week</option>
+          </select>
+        </div>
       </div>
+      <button class="btn-green" id="calc-btn">Calculate My Targets →</button>
     </div>
-    <div class="card">
-      <div class="card-title">📈 Weight Trend (Last 90 Days)</div>
-      <div class="chart-wrap">
-        <div class="weight-chart" id="wt-chart"></div>
-      </div>
-    </div>
-    <button class="hist-toggle" id="wt-hist-btn">📅 View Weight History</button>
-    <div class="hist-panel" id="wt-hist-panel">
+    <div id="hub-results" style="display:none;">
       <div class="card">
-        <div class="card-title">Weight Log</div>
-        <div class="hist-list" id="wt-hist-list"></div>
-      </div>
-    </div>
-    <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a></div>
-  </div>
-
-  <!-- ══ TAB 2: HUB ══════════════════════════════════ -->
-  <div class="tab" id="tab-hub">
-    <div id="onboard-section" style="display:none;">
-      <div class="onboard">
-        <h2>Welcome to PG Wellness! 🌿</h2>
-        <p>Let's personalize your experience. This takes just 30 seconds and your info is saved forever.</p>
-        <input type="text" id="ob-name" placeholder="Your first name" autocomplete="given-name">
-        <input type="number" id="ob-weight" placeholder="Your starting weight (lbs)">
-        <input type="number" id="ob-age" placeholder="Your birth year (e.g. 1987)">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <input type="number" id="ob-ft" placeholder="Height (feet)">
-          <input type="number" id="ob-in" placeholder="Height (inches)">
+        <div class="card-title">📐 Your BMI</div>
+        <div class="bmi-wrap">
+          <div><div class="bmi-lbl">Body Mass Index</div><div class="bmi-num" id="r-bmi">--</div></div>
+          <div class="bmi-cat" id="r-bmi-cat">--</div>
         </div>
-        <button class="ob-btn" id="ob-btn">Get Started →</button>
+        <div class="bmi-bar"><div class="bmi-dot" id="bmi-dot" style="left:0%"></div></div>
+        <div class="bmi-scale"><span>Underweight</span><span>Normal</span><span>Overweight</span><span>Obese</span></div>
       </div>
-    </div>
-    <div id="hub-content" style="display:none;">
       <div class="card">
-        <div class="card-title">📋 Calculate My Targets</div>
-        <div class="field">
-          <label>Biological Sex</label>
-          <div class="gender-row">
-            <button class="gbtn on" id="bm">Male</button>
-            <button class="gbtn" id="bf">Female</button>
-          </div>
-        </div>
-        <div class="field">
-          <label>Age <span style="font-size:10px;color:#a0aec0;font-weight:400;">(auto-updated from your birth year)</span></label>
-          <input type="number" id="age" placeholder="Enter your age">
-        </div>
-        <div class="field">
-          <label>Height</label>
-          <div class="two-col">
-            <input type="number" id="ft" placeholder="Feet">
-            <input type="number" id="in" placeholder="Inches">
-          </div>
-        </div>
-        <div class="field">
-          <label>Current Weight (lbs)</label>
-          <input type="number" id="wt" placeholder="Enter your weight">
-        </div>
-        <div class="field">
-          <label>Activity Level</label>
-          <div class="sel-wrap">
-            <select id="act">
-              <option value="">Please select...</option>
-              <option value="1.2">Sedentary — Little to no exercise</option>
-              <option value="1.375">Lightly Active — 1–2 days/week</option>
-              <option value="1.55">Moderately Active — 3–5 days/week</option>
-              <option value="1.725">Very Active — 6–7 days/week</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn-green" id="calc-btn">Calculate My Targets →</button>
-      </div>
-      <div id="hub-results" style="display:none;">
-        <div class="card">
-          <div class="card-title">📐 Your BMI</div>
-          <div class="bmi-wrap">
-            <div><div class="bmi-lbl">Body Mass Index</div><div class="bmi-num" id="r-bmi">--</div></div>
-            <div class="bmi-cat" id="r-bmi-cat">--</div>
-          </div>
-          <div class="bmi-bar"><div class="bmi-dot" id="bmi-dot" style="left:0%"></div></div>
-          <div class="bmi-scale"><span>Underweight</span><span>Normal</span><span>Overweight</span><span>Obese</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">🍽️ Daily Nutrition Targets</div>
-          <div class="mgrid">
-            <div class="mc cal"><div class="val" id="r-cal">--</div><div class="unit">calories/day</div><div class="name">Calorie Target</div><div class="desc">500 cal deficit for ~1 lb/week</div></div>
-            <div class="mc"><div class="val" id="r-pro">--</div><div class="unit">grams/day</div><div class="name">Protein</div><div class="desc">Priority #1</div></div>
-            <div class="mc"><div class="val" id="r-carb">--</div><div class="unit">grams/day</div><div class="name">Carbs</div><div class="desc">Whole foods</div></div>
-            <div class="mc"><div class="val" id="r-fat">--</div><div class="unit">grams/day</div><div class="name">Fats</div><div class="desc">Healthy sources</div></div>
-            <div class="mc"><div class="val" id="r-sugar">--</div><div class="unit">grams/day</div><div class="name">Added Sugar Limit</div><div class="desc">Added sugars only</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">🍽️ Protein Per Meal</div>
-          <div class="pmeal-row">
-            <div class="pmeal"><div class="pv" id="r-3m">--</div><div class="pl">grams per meal</div><div class="pd">3 meals/day</div></div>
-            <div class="pmeal"><div class="pv" id="r-4m">--</div><div class="pl">grams per meal</div><div class="pd">4 meals/day</div></div>
-          </div>
-          <div class="tip blue">
-            <h4>💪 Why Protein is Your #1 Priority</h4>
-            <p>On weight loss medications your body can lose muscle alongside fat. Hitting your protein target daily preserves muscle, keeps you full longer, and supports your metabolism.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">💧 Daily Hydration</div>
-          <div class="water-row">
-            <div class="ico">💧</div>
-            <div><h4>Daily Water Target</h4><p>Half your body weight in ounces</p></div>
-            <div class="amt" id="r-water">--</div>
-          </div>
-          <div class="conv-row">
-            <div class="conv"><div class="cv" id="r-cups">--</div><div class="cl">cups (8oz)</div></div>
-            <div class="conv"><div class="cv" id="r-bottles">--</div><div class="cl">bottles (16oz)</div></div>
-            <div class="conv"><div class="cv" id="r-liters">--</div><div class="cl">liters</div></div>
-          </div>
-          <div class="tip blue">
-            <h4>💧 Why Hydration is Critical</h4>
-            <p>Water is your body's most essential fat-burning tool. Dehydration slows metabolism, increases cravings, and makes weight loss harder. Stay hydrated to maximize your results.</p>
-            <div class="badges">
-              <span class="badge">⚡ Boosts Metabolism</span>
-              <span class="badge">🍽️ Reduces Cravings</span>
-              <span class="badge">🔥 Enhances Fat Burn</span>
-              <span class="badge">💪 Improves Energy</span>
-            </div>
-          </div>
-        </div>
-        <div class="ms-card">
-          <div class="ms-card-title">🎯 Your Health Milestones</div>
-          <div class="ms-row">
-            <div class="ms-item"><div class="msv" id="r-5pct">--</div><div class="msl">5% of your weight</div></div>
-            <div class="ms-item"><div class="msv" id="r-10pct">--</div><div class="msl">10% of your weight</div></div>
-          </div>
-          <div class="ms-benefits">
-            <span class="ms-badge">❤️ Blood Pressure</span>
-            <span class="ms-badge">🩸 Blood Sugar</span>
-            <span class="ms-badge">💊 Cholesterol</span>
-            <span class="ms-badge">😴 Sleep</span>
-            <span class="ms-badge">🦵 Joint Pain</span>
-          </div>
-        </div>
-        <div class="card" style="border-top:3px solid var(--green);">
-          <div class="card-title">📉 Progress Checker</div>
-          <div class="two-col" style="margin-bottom:12px;">
-            <div class="field" style="margin:0;"><label>Starting Weight (lbs)</label><input type="number" id="pc-start" placeholder="e.g. 280"></div>
-            <div class="field" style="margin:0;"><label>Current Weight (lbs)</label><input type="number" id="pc-current" placeholder="e.g. 255"></div>
-          </div>
-          <button class="btn-green" id="pc-btn" style="margin-bottom:12px;">Check My Progress</button>
-          <div id="pc-results" style="display:none;">
-            <div class="pc-row">
-              <div class="pc-item green"><div class="pcv" id="pc-lost">--</div><div class="pcl">lbs lost</div></div>
-              <div class="pc-item blue"><div class="pcv" id="pc-pct">--</div><div class="pcl">% lost</div></div>
-              <div class="pc-item"><div class="pcv" id="pc-ms">--</div><div class="pcl">milestone</div></div>
-            </div>
-            <div class="enc"><p id="pc-msg"></p></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">📅 Weight Loss Timeline</div>
-          <div class="field"><label>Your Goal Weight (lbs)</label><input type="number" id="tl-goal" placeholder="e.g. 180"></div>
-          <button class="btn-blue" id="tl-btn" style="margin-bottom:12px;">Calculate Timeline</button>
-          <div id="tl-results" style="display:none;">
-            <div class="tl-hero">
-              <div class="mlbl">Estimated time to reach your goal</div>
-              <div class="months" id="tl-months">--</div>
-              <div class="mlbl">months</div>
-              <div class="msub" id="tl-sub"></div>
-            </div>
-            <div class="tl-grid">
-              <div class="tl-item"><div class="tlm">1 mo</div><div class="tll" id="tl-1m">--</div><div class="tls">lost</div></div>
-              <div class="tl-item"><div class="tlm">3 mo</div><div class="tll" id="tl-3m">--</div><div class="tls">lost</div></div>
-              <div class="tl-item"><div class="tlm">6 mo</div><div class="tll" id="tl-6m">--</div><div class="tls">lost</div></div>
-            </div>
-            <div class="enc"><p id="tl-msg"></p></div>
-          </div>
-        </div>
-        <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a> · Your Care. Anywhere. When You Need It.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ TAB 3: STEPS ═══════════════════════════════ -->
-  <div class="tab" id="tab-steps">
-    <div class="card" style="border-top:3px solid var(--green);">
-      <div class="card-title">✅ Daily Checklist</div>
-      <div style="display:flex;gap:10px;margin-bottom:12px;">
-        <div style="flex:1;background:var(--green-light);border-radius:12px;padding:10px;text-align:center;">
-          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--green);" id="water-streak-val">0</div>
-          <div style="font-size:10px;font-weight:700;color:#a0aec0;text-transform:uppercase;">💧 Water Streak</div>
-        </div>
-        <div style="flex:1;background:var(--blue-light);border-radius:12px;padding:10px;text-align:center;">
-          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--blue);" id="protein-streak-val">0</div>
-          <div style="font-size:10px;font-weight:700;color:#a0aec0;text-transform:uppercase;">🥩 Protein Streak</div>
+        <div class="card-title">🍽️ Daily Nutrition Targets</div>
+        <div class="mgrid">
+          <div class="mc cal"><div class="val" id="r-cal">--</div><div class="unit">calories/day</div><div class="name">Calorie Target</div><div class="desc">500 cal deficit ~1 lb/week</div></div>
+          <div class="mc"><div class="val" id="r-pro">--</div><div class="unit">grams/day</div><div class="name">Protein</div><div class="desc">Priority #1</div></div>
+          <div class="mc"><div class="val" id="r-carb">--</div><div class="unit">grams/day</div><div class="name">Carbs</div><div class="desc">Whole foods</div></div>
+          <div class="mc"><div class="val" id="r-fat">--</div><div class="unit">grams/day</div><div class="name">Fats</div><div class="desc">Healthy sources</div></div>
+          <div class="mc"><div class="val" id="r-sugar">--</div><div class="unit">grams/day</div><div class="name">Added Sugar Limit</div><div class="desc">Added sugars only</div></div>
         </div>
       </div>
-      <div class="check-row" id="check-water" onclick="toggleCheck('water')">
-        <div class="check-left"><div class="check-icon">💧</div><div class="check-text"><h4>Hit my water goal today</h4><p id="check-water-lbl">Your daily water target</p></div></div>
-        <div class="checkmark" id="cm-water"></div>
-      </div>
-      <div class="check-row" id="check-protein" onclick="toggleCheck('protein')">
-        <div class="check-left"><div class="check-icon">🥩</div><div class="check-text"><h4>Hit my protein goal today</h4><p id="check-protein-lbl">Your daily protein target</p></div></div>
-        <div class="checkmark" id="cm-protein"></div>
-      </div>
-      <div id="checklist-msg" style="font-size:12px;font-weight:700;text-align:center;padding:10px;border-radius:10px;background:var(--gray);color:var(--gray-dark);margin-top:8px;">Tap each item when you've completed it today!</div>
-      <div class="tip blue" style="margin-top:12px;margin-bottom:0;">
-        <h4>💧 Why Hydration is Critical During Exercise</h4>
-        <p>Even mild dehydration during physical activity can reduce performance by up to 30%. Water lubricates your joints, regulates your body temperature, and delivers oxygen to your muscles.</p>
-        <div class="badges">
-          <span class="badge">🏃 Better Performance</span>
-          <span class="badge">🦵 Joint Protection</span>
-          <span class="badge">❄️ Temperature Control</span>
-          <span class="badge">⚡ Faster Recovery</span>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">⚙️ Daily Step Goal</div>
-      <div style="display:flex;gap:10px;align-items:flex-end;">
-        <div class="field" style="margin:0;flex:1;"><label>My Daily Step Goal</label><input type="number" id="step-goal-input" placeholder="e.g. 8000"></div>
-        <button style="padding:13px 16px;background:var(--blue);color:white;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap;" id="step-goal-btn">Save</button>
-      </div>
-      <div style="font-size:11px;color:#a0aec0;margin-top:8px;">💡 10,000 steps = ~5 miles. Start with 6,000–8,000 if you're just beginning.</div>
-    </div>
-    <div class="card">
-      <div class="card-title">📍 Today's Steps</div>
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
-        <div class="ring-container">
-          <svg width="110" height="110" viewBox="0 0 110 110">
-            <circle fill="none" stroke="#e2e8f0" stroke-width="10" cx="55" cy="55" r="45"/>
-            <circle fill="none" stroke="#2B5BA8" stroke-width="10" stroke-linecap="round" cx="55" cy="55" r="45" stroke-dasharray="283" stroke-dashoffset="283" id="step-ring"/>
-          </svg>
-          <div class="ring-center"><div class="ring-pct" id="step-ring-pct">0%</div><div class="ring-lbl">of goal</div></div>
-        </div>
-        <div>
-          <div class="today-steps-big" id="step-today">0</div>
-          <div class="today-lbl">steps today</div>
-          <div class="today-goal-lbl">Goal: <strong id="step-goal-display">--</strong></div>
-        </div>
-      </div>
-      <div class="log-row">
-        <input type="number" id="step-log-input" placeholder="Enter your steps">
-        <button class="log-btn" id="step-log-btn">Log Steps</button>
-      </div>
-      <div class="day-msg" id="step-msg">Enter your steps to track your progress!</div>
-    </div>
-    <div class="streak">
-      <div class="sfire">🔥</div>
-      <div>
-        <div class="sval" id="step-streak">0</div>
-        <div class="slbl">Day Streak</div>
-        <div class="smsg" id="step-streak-msg">Log your first day to start your streak!</div>
-      </div>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-item"><div class="sv" id="step-stat-week">0k</div><div class="sl">This Week</div></div>
-      <div class="stat-item"><div class="sv" id="step-stat-avg">0k</div><div class="sl">Daily Avg</div></div>
-      <div class="stat-item"><div class="sv" id="step-stat-days">0</div><div class="sl">Days Logged</div></div>
-    </div>
-    <button class="hist-toggle" id="step-hist-btn">📅 View 90-Day Step History</button>
-    <div class="hist-panel" id="step-hist-panel">
       <div class="card">
-        <div class="card-title">Step History</div>
-        <div class="chart-wrap" style="margin-bottom:12px;"><div class="schart" id="step-chart"></div></div>
-        <div class="hist-list" id="step-hist-list"></div>
+        <div class="card-title">🍽️ Protein Per Meal</div>
+        <div class="pmeal-row">
+          <div class="pmeal"><div class="pv" id="r-3m">--</div><div class="pl">grams per meal</div><div class="pd">3 meals/day</div></div>
+          <div class="pmeal"><div class="pv" id="r-4m">--</div><div class="pl">grams per meal</div><div class="pd">4 meals/day</div></div>
+        </div>
+        <div class="tip blue">
+          <h4>💪 Why Protein is Your #1 Priority</h4>
+          <p>On weight loss medications your body can lose muscle alongside fat. Hitting your protein target daily preserves muscle, keeps you full longer, and supports your metabolism.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">💧 Daily Hydration</div>
+        <div class="water-row">
+          <div class="ico">💧</div>
+          <div><h4>Daily Water Target</h4><p>Half your body weight in ounces</p></div>
+          <div class="amt" id="r-water">--</div>
+        </div>
+        <div class="conv-row">
+          <div class="conv"><div class="cv" id="r-cups">--</div><div class="cl">cups (8oz)</div></div>
+          <div class="conv"><div class="cv" id="r-bottles">--</div><div class="cl">bottles (16oz)</div></div>
+          <div class="conv"><div class="cv" id="r-liters">--</div><div class="cl">liters</div></div>
+        </div>
+        <div class="tip blue">
+          <h4>💧 Why Hydration Matters</h4>
+          <p>Water is your body's most essential fat-burning tool. Dehydration slows metabolism, increases cravings, and makes weight loss harder.</p>
+          <div class="badges">
+            <span class="badge">⚡ Boosts Metabolism</span>
+            <span class="badge">🍽️ Reduces Cravings</span>
+            <span class="badge">🔥 Fat Burn</span>
+            <span class="badge">💪 Energy</span>
+          </div>
+        </div>
+      </div>
+      <div class="ms-card">
+        <div class="ms-title">🎯 Your Health Milestones</div>
+        <div class="ms-row">
+          <div class="ms-item"><div class="msv" id="r-5pct">--</div><div class="msl">5% of your weight</div></div>
+          <div class="ms-item"><div class="msv" id="r-10pct">--</div><div class="msl">10% of your weight</div></div>
+        </div>
+        <div class="ms-benefits">
+          <span class="ms-badge">❤️ Blood Pressure</span>
+          <span class="ms-badge">🩸 Blood Sugar</span>
+          <span class="ms-badge">💊 Cholesterol</span>
+          <span class="ms-badge">😴 Sleep</span>
+          <span class="ms-badge">🦵 Joint Pain</span>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--green);">
+        <div class="card-title">📉 Progress Checker</div>
+        <div class="two-col" style="margin-bottom:12px;">
+          <div class="field" style="margin:0;"><label>Starting Weight (lbs)</label><input type="number" id="pc-start" placeholder="e.g. 280"></div>
+          <div class="field" style="margin:0;"><label>Current Weight (lbs)</label><input type="number" id="pc-current" placeholder="e.g. 255"></div>
+        </div>
+        <button class="btn-green" id="pc-btn" style="margin-bottom:12px;">Check My Progress</button>
+        <div id="pc-results" style="display:none;">
+          <div class="pc-row">
+            <div class="pc-item green"><div class="pcv" id="pc-lost">--</div><div class="pcl">lbs lost</div></div>
+            <div class="pc-item blue"><div class="pcv" id="pc-pct">--</div><div class="pcl">% lost</div></div>
+            <div class="pc-item"><div class="pcv" id="pc-ms">--</div><div class="pcl">milestone</div></div>
+          </div>
+          <div class="enc"><p id="pc-msg"></p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📅 Weight Loss Timeline</div>
+        <div class="field"><label>Your Goal Weight (lbs)</label><input type="number" id="tl-goal" placeholder="e.g. 180"></div>
+        <button class="btn-blue" id="tl-btn" style="margin-bottom:12px;">Calculate Timeline</button>
+        <div id="tl-results" style="display:none;">
+          <div class="tl-hero">
+            <div class="mlbl">Estimated time to reach your goal</div>
+            <div class="months" id="tl-months">--</div>
+            <div class="mlbl">months</div>
+            <div class="msub" id="tl-sub"></div>
+          </div>
+          <div class="tl-grid">
+            <div class="tl-item"><div class="tlm">1 mo</div><div class="tll" id="tl-1m">--</div><div class="tls">lost</div></div>
+            <div class="tl-item"><div class="tlm">3 mo</div><div class="tll" id="tl-3m">--</div><div class="tls">lost</div></div>
+            <div class="tl-item"><div class="tlm">6 mo</div><div class="tll" id="tl-6m">--</div><div class="tls">lost</div></div>
+          </div>
+          <div class="enc"><p id="tl-msg"></p></div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green-light);border:2px solid var(--green);">
+        <div style="text-align:center;margin-bottom:12px;">
+          <div style="font-size:28px;margin-bottom:6px;">🦶</div>
+          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:16px;color:var(--green-dark);">Ready to track your activity?</div>
+          <div style="font-size:12px;color:#4a5568;margin-top:4px;">Log your daily steps and hit your hydration and protein goals.</div>
+        </div>
+        <button class="btn-green" id="go-to-steps-btn">Go to Step Tracker →</button>
       </div>
     </div>
-    <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a></div>
   </div>
-
-  <!-- ══ TAB 4: PROGRESS ════════════════════════════ -->
-  <div class="tab" id="tab-progress">
-    <div class="prog-hero">
-      <div class="ph-name" id="prog-name">Your Progress</div>
-      <div class="ph-lost" id="prog-lost">--</div>
-      <div class="ph-lbl">pounds lost</div>
-      <div class="ph-pct" id="prog-pct">--%</div>
-      <div class="ph-pct-lbl">of starting body weight</div>
-    </div>
-    <div class="comb-stats">
-      <div class="comb-stat"><div class="csv" id="prog-start">--</div><div class="csl">Starting Weight</div></div>
-      <div class="comb-stat"><div class="csv" id="prog-current">--</div><div class="csl">Current Weight</div></div>
-      <div class="comb-stat"><div class="csv" id="prog-weigh-ins">--</div><div class="csl">Weigh-ins</div></div>
-      <div class="comb-stat"><div class="csv" id="prog-streak">--</div><div class="csl">Step Streak</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">🏆 Milestone Badges</div>
-      <div class="badge-grid">
-        <div class="badge-item" id="badge-5"><div class="bi">🥉</div><div class="bv">5%</div><div class="bl">5% Lost</div></div>
-        <div class="badge-item" id="badge-10"><div class="bi">🥈</div><div class="bv">10%</div><div class="bl">10% Lost</div></div>
-        <div class="badge-item" id="badge-15"><div class="bi">🥇</div><div class="bv">15%</div><div class="bl">15% Lost</div></div>
-        <div class="badge-item" id="badge-20"><div class="bi">🏆</div><div class="bv">20%</div><div class="bl">20% Lost</div></div>
-        <div class="badge-item" id="badge-25"><div class="bi">💎</div><div class="bv">25%</div><div class="bl">25% Lost</div></div>
-        <div class="badge-item" id="badge-30"><div class="bi">👑</div><div class="bv">30%</div><div class="bl">30% Lost</div></div>
-        <div class="badge-item" id="badge-35"><div class="bi">⭐</div><div class="bv">35%</div><div class="bl">35% Lost</div></div>
-        <div class="badge-item" id="badge-40"><div class="bi">🌟</div><div class="bv">40%</div><div class="bl">40% Lost</div></div>
-        <div class="badge-item" id="badge-45"><div class="bi">🔥</div><div class="bv">45%</div><div class="bl">45% Lost</div></div>
-        <div class="badge-item" id="badge-50"><div class="bi">🎯</div><div class="bv">50%</div><div class="bl">50% Lost</div></div>
-      </div>
-    </div>
-    <div class="enc" id="prog-enc"><p>Log your weight in the Weight tab to see your progress here!</p></div>
-    <div style="margin-top:8px;">
-      <button id="reset-btn" class="btn-ghost" style="color:#e53e3e;border-color:#fed7d7;font-size:12px;">🔄 Reset App Data</button>
-    </div>
-    <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a> · Your Care. Anywhere. When You Need It.</div>
-  </div>
-
+  <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a></div>
 </div>
-<div style="padding:0 14px 8px;max-width:520px;margin:0 auto;">
-  <a href="https://pgdirectcare.github.io/pg-macro-calculator" style="display:block;width:100%;padding:13px;background:#0d2347;color:white;border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;text-align:center;text-decoration:none;">📊 Open PG Wellness Hub →</a>
+<div class="tab" id="tab-steps">
+  <div class="card" style="border-top:3px solid var(--green);">
+    <div class="card-title">✅ Daily Checklist</div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;">
+      <div style="flex:1;background:var(--green-light);border-radius:12px;padding:10px;text-align:center;">
+        <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--green);" id="water-streak-val">0</div>
+        <div style="font-size:10px;font-weight:700;color:#a0aec0;text-transform:uppercase;">💧 Water Streak</div>
+      </div>
+      <div style="flex:1;background:var(--blue-light);border-radius:12px;padding:10px;text-align:center;">
+        <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--blue);" id="protein-streak-val">0</div>
+        <div style="font-size:10px;font-weight:700;color:#a0aec0;text-transform:uppercase;">🥩 Protein Streak</div>
+      </div>
+    </div>
+    <div class="check-row" id="check-water" onclick="toggleCheck('water')">
+      <div class="check-left"><div class="check-icon">💧</div><div class="check-text"><h4>Hit my water goal today</h4><p id="check-water-lbl">Your daily water target</p></div></div>
+      <div class="checkmark" id="cm-water"></div>
+    </div>
+    <div class="check-row" id="check-protein" onclick="toggleCheck('protein')">
+      <div class="check-left"><div class="check-icon">🥩</div><div class="check-text"><h4>Hit my protein goal today</h4><p id="check-protein-lbl">Your daily protein target</p></div></div>
+      <div class="checkmark" id="cm-protein"></div>
+    </div>
+    <div id="checklist-msg" style="font-size:12px;font-weight:700;text-align:center;padding:10px;border-radius:10px;background:var(--gray);color:var(--gray-dark);margin-top:8px;">Tap each item when you've completed it today!</div>
+    <div class="tip blue" style="margin-top:12px;margin-bottom:0;">
+      <h4>💧 Why Hydration is Critical During Exercise</h4>
+      <p>Even mild dehydration during physical activity can reduce performance by up to 30%. Water lubricates your joints, regulates body temperature, and delivers oxygen to your muscles.</p>
+      <div class="badges">
+        <span class="badge">🏃 Better Performance</span>
+        <span class="badge">🦵 Joint Protection</span>
+        <span class="badge">❄️ Temperature Control</span>
+        <span class="badge">⚡ Faster Recovery</span>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚙️ Daily Step Goal</div>
+    <div style="display:flex;gap:10px;align-items:flex-end;">
+      <div class="field" style="margin:0;flex:1;"><label>My Daily Step Goal</label><input type="number" id="step-goal-input" placeholder="e.g. 8000"></div>
+      <button style="padding:13px 16px;background:var(--blue);color:white;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;" id="step-goal-btn">Save</button>
+    </div>
+    <div style="font-size:11px;color:#a0aec0;margin-top:8px;">💡 10,000 steps = ~5 miles. Start with 6,000–8,000 if you're just beginning.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">📍 Today's Steps</div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
+      <div class="ring-container">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle fill="none" stroke="#e2e8f0" stroke-width="10" cx="55" cy="55" r="45"/>
+          <circle fill="none" stroke="#2B5BA8" stroke-width="10" stroke-linecap="round" cx="55" cy="55" r="45" stroke-dasharray="283" stroke-dashoffset="283" id="step-ring"/>
+        </svg>
+        <div class="ring-center"><div class="ring-pct" id="step-ring-pct">0%</div><div class="ring-lbl">of goal</div></div>
+      </div>
+      <div>
+        <div class="today-steps-big" id="step-today">0</div>
+        <div class="today-lbl">steps today</div>
+        <div class="today-goal-lbl">Goal: <strong id="step-goal-display">--</strong></div>
+      </div>
+    </div>
+    <div class="log-row">
+      <input type="number" id="step-log-input" placeholder="Enter your steps">
+      <button class="log-btn" id="step-log-btn">Log Steps</button>
+    </div>
+    <div class="day-msg" id="step-msg">Enter your steps to track your progress!</div>
+  </div>
+  <div class="streak">
+    <div class="sf">🔥</div>
+    <div>
+      <div class="sv" id="step-streak">0</div>
+      <div class="sl">Day Streak</div>
+      <div class="sm" id="step-streak-msg">Log your first day to start your streak!</div>
+    </div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-item"><div class="sv" id="step-stat-week">0k</div><div class="sl">This Week</div></div>
+    <div class="stat-item"><div class="sv" id="step-stat-avg">0k</div><div class="sl">Daily Avg</div></div>
+    <div class="stat-item"><div class="sv" id="step-stat-days">0</div><div class="sl">Days Logged</div></div>
+  </div>
+  <button class="hist-toggle" id="step-hist-btn">📅 View 90-Day Step History</button>
+  <div class="hist-panel" id="step-hist-panel">
+    <div class="card">
+      <div class="card-title">Step History</div>
+      <div class="chart-wrap" style="margin-bottom:12px;"><div class="schart" id="step-chart"></div></div>
+      <div class="hist-list" id="step-hist-list"></div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--blue-light);border:2px solid var(--blue);">
+    <div style="text-align:center;margin-bottom:12px;">
+      <div style="font-size:28px;margin-bottom:6px;">📈</div>
+      <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:16px;color:var(--blue);">See your overall progress!</div>
+      <div style="font-size:12px;color:#4a5568;margin-top:4px;">View your milestone badges, weight loss percentage, and personalized encouragement.</div>
+    </div>
+    <button class="btn-blue" id="go-to-progress-btn">View My Progress →</button>
+  </div>
+  <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a></div>
 </div>
 
-  <div class="nav">
+<div class="tab" id="tab-progress">
+  <div class="prog-hero">
+    <div class="ph-name" id="prog-name">Your Progress</div>
+    <div class="ph-lost" id="prog-lost">--</div>
+    <div class="ph-lbl">pounds lost</div>
+    <div class="ph-pct" id="prog-pct">--%</div>
+    <div class="ph-pct-lbl">of starting body weight</div>
+  </div>
+  <div class="comb-stats">
+    <div class="comb-stat"><div class="csv" id="prog-start">--</div><div class="csl">Starting Weight</div></div>
+    <div class="comb-stat"><div class="csv" id="prog-current">--</div><div class="csl">Current Weight</div></div>
+    <div class="comb-stat"><div class="csv" id="prog-weigh-ins">--</div><div class="csl">Weigh-ins</div></div>
+    <div class="comb-stat"><div class="csv" id="prog-step-streak">--</div><div class="csl">Step Streak</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🏆 Milestone Badges</div>
+    <div class="badge-grid">
+      <div class="badge-item" id="badge-5"><div class="bi">🥉</div><div class="bv">5%</div><div class="bl">5% Lost</div></div>
+      <div class="badge-item" id="badge-10"><div class="bi">🥈</div><div class="bv">10%</div><div class="bl">10% Lost</div></div>
+      <div class="badge-item" id="badge-15"><div class="bi">🥇</div><div class="bv">15%</div><div class="bl">15% Lost</div></div>
+      <div class="badge-item" id="badge-20"><div class="bi">🏆</div><div class="bv">20%</div><div class="bl">20% Lost</div></div>
+      <div class="badge-item" id="badge-25"><div class="bi">💎</div><div class="bv">25%</div><div class="bl">25% Lost</div></div>
+      <div class="badge-item" id="badge-30"><div class="bi">👑</div><div class="bv">30%</div><div class="bl">30% Lost</div></div>
+      <div class="badge-item" id="badge-35"><div class="bi">⭐</div><div class="bv">35%</div><div class="bl">35% Lost</div></div>
+      <div class="badge-item" id="badge-40"><div class="bi">🌟</div><div class="bv">40%</div><div class="bl">40% Lost</div></div>
+      <div class="badge-item" id="badge-45"><div class="bi">🔥</div><div class="bv">45%</div><div class="bl">45% Lost</div></div>
+      <div class="badge-item" id="badge-50"><div class="bi">🎯</div><div class="bv">50%</div><div class="bl">50% Lost</div></div>
+    </div>
+  </div>
+  <div class="enc" id="prog-enc"><p>Log your weight in the Weight tab to see your progress here!</p></div>
+  <button class="btn-ghost" id="reset-btn" style="color:#e53e3e;border-color:#fed7d7;">🔄 Reset App Data</button>
+  <div class="ftr"><strong>PG Direct Care</strong> · <a href="https://www.pgdirectcare.com">pgdirectcare.com</a> · Your Care. Anywhere. When You Need It.</div>
+</div>
+
+</div>
+<div class="nav">
   <button class="nav-btn active" id="nav-weight" onclick="switchTab('weight')"><span class="ni">⚖️</span><span class="nl">Weight</span></button>
   <button class="nav-btn" id="nav-hub" onclick="switchTab('hub')"><span class="ni">🏠</span><span class="nl">Hub</span></button>
   <button class="nav-btn" id="nav-steps" onclick="switchTab('steps')"><span class="ni">🦶</span><span class="nl">Steps</span></button>
@@ -555,519 +586,399 @@ html, body {
 </div>
 </div>
 <script>
-var _memStore = {};
-
+var _mem = {};
 function getData() {
-  try {
-    var raw = localStorage.getItem('pg_wellness');
-    return raw ? JSON.parse(raw) : _memStore;
-  } catch(e) { return _memStore; }
+  try { var r = localStorage.getItem('pgw'); return r ? JSON.parse(r) : _mem; }
+  catch(e) { return _mem; }
 }
-
 function saveData(d) {
-  _memStore = d;
-  try { localStorage.setItem('pg_wellness', JSON.stringify(d)); } catch(e) {}
+  _mem = d;
+  try { localStorage.setItem('pgw', JSON.stringify(d)); } catch(e) {}
 }
-
 function todayKey() {
   var d = new Date();
-  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 }
-
 function weekKey() {
-  var d = new Date();
-  var day = d.getDay();
-  var diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  var mon = new Date(d.setDate(diff));
-  return mon.getFullYear() + '-' + pad(mon.getMonth()+1) + '-' + pad(mon.getDate());
+  var d = new Date(), day = d.getDay();
+  var diff = d.getDate() - day + (day===0 ? -6 : 1);
+  var m = new Date(d.setDate(diff));
+  return m.getFullYear()+'-'+pad(m.getMonth()+1)+'-'+pad(m.getDate());
 }
-
-function pad(n) { return n < 10 ? '0'+n : ''+n; }
-
-function formatDate(key) {
-  var p = key.split('-');
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return months[parseInt(p[1])-1] + ' ' + parseInt(p[2]) + ', ' + p[0];
+function pad(n) { return n<10?'0'+n:''+n; }
+function fmtDate(k) {
+  var p=k.split('-'), mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return mo[parseInt(p[1])-1]+' '+parseInt(p[2])+', '+p[0];
 }
-
 function getDayKey(ago) {
-  var d = new Date(); d.setDate(d.getDate() - ago);
-  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+  var d=new Date(); d.setDate(d.getDate()-ago);
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 }
-
-function getDayLabel(ago) {
-  if (ago === 0) return 'T';
-  var d = new Date(); d.setDate(d.getDate() - ago);
+function getDayLbl(ago) {
+  if(ago===0) return 'T';
+  var d=new Date(); d.setDate(d.getDate()-ago);
   return ['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()];
 }
-
 function switchTab(name) {
-  ['hub','weight','steps','progress'].forEach(function(t) {
-    document.getElementById('tab-'+t).classList.toggle('active', t === name);
-    document.getElementById('nav-'+t).classList.toggle('active', t === name);
+  ['weight','hub','steps','progress'].forEach(function(t) {
+    document.getElementById('tab-'+t).classList.toggle('active', t===name);
+    document.getElementById('nav-'+t).classList.toggle('active', t===name);
   });
-  document.getElementById('scroll-area').scrollTop = 0;
-  if (name === 'weight') renderWeightTab();
-  if (name === 'steps') renderStepsTab();
-  if (name === 'progress') renderProgressTab();
-  if (name === 'hub') {
-    var d = getData();
-    var weights = d.weights || {};
-    var keys = Object.keys(weights).sort();
-    if (keys.length > 0) document.getElementById('wt').value = weights[keys[keys.length-1]];
-  }
+  document.getElementById('main-content').scrollTop = 0;
+  window.scrollTo(0,0);
+  if(name==='weight') renderWeightTab();
+  if(name==='steps') renderStepsTab();
+  if(name==='progress') renderProgressTab();
+  if(name==='hub') prefillHub();
 }
-
-function initApp() {
+function init() {
   var d = getData();
-  if (!d.name || !d.startWeight) {
-    switchTab('hub');
+  if(!d.name || !d.startWeight) {
     document.getElementById('onboard-section').style.display = 'block';
     document.getElementById('hub-content').style.display = 'none';
+    switchTab('hub');
   } else {
     document.getElementById('onboard-section').style.display = 'none';
     document.getElementById('hub-content').style.display = 'block';
-    updateWelcome(d.name);
-    if (d.lastCalcWeight) document.getElementById('wt').value = d.lastCalcWeight;
-    else if (d.startWeight) document.getElementById('wt').value = d.startWeight;
-    if (d.birthYear) document.getElementById('age').value = new Date().getFullYear() - d.birthYear;
-    if (d.ft) document.getElementById('ft').value = d.ft;
-    if (d.in !== undefined) document.getElementById('in').value = d.in;
-    if (d.startWeight) document.getElementById('pc-start').value = d.startWeight;
-    var weights2 = d.weights || {};
-    var wkeys = Object.keys(weights2).sort();
-    if (wkeys.length > 0) document.getElementById('pc-current').value = weights2[wkeys[wkeys.length-1]];
-  }
-}
-
-function updateWelcome(name) {
-  document.getElementById('hdr-welcome').innerHTML = 'Welcome back, <span>' + name + '!</span>';
-}
-
-var sex = 'male';
-
-function setupHubListeners() {
-  document.getElementById('bm').addEventListener('click', function() {
-    sex = 'male';
-    document.getElementById('bm').className = 'gbtn on';
-    document.getElementById('bf').className = 'gbtn';
-  });
-
-  document.getElementById('bf').addEventListener('click', function() {
-    sex = 'female';
-    document.getElementById('bm').className = 'gbtn';
-    document.getElementById('bf').className = 'gbtn on';
-  });
-
-  document.getElementById('ob-btn').addEventListener('click', function() {
-    var name = document.getElementById('ob-name').value.trim();
-    var wt = parseFloat(document.getElementById('ob-weight').value);
-    var birthYear = parseFloat(document.getElementById('ob-age').value);
-    var ft = parseFloat(document.getElementById('ob-ft').value);
-    var inc = parseFloat(document.getElementById('ob-in').value) || 0;
-    var currentYear = new Date().getFullYear();
-    if (!name || !wt || !birthYear || birthYear < 1900 || birthYear > currentYear || !ft) {
-      alert('Please fill in all fields including a valid birth year.');
-      return;
-    }
-    var d = getData();
-    d.name = name; d.startWeight = wt; d.birthYear = birthYear; d.ft = ft; d.in = inc;
-    if (!d.weights) d.weights = {};
-    d.weights[weekKey()] = wt;
-    saveData(d);
-    document.getElementById('onboard-section').style.display = 'none';
-    document.getElementById('hub-content').style.display = 'block';
-    updateWelcome(name);
-    document.getElementById('wt').value = wt;
-    document.getElementById('age').value = currentYear - birthYear;
-    document.getElementById('ft').value = ft;
-    document.getElementById('in').value = inc;
-    document.getElementById('pc-start').value = wt;
-    switchTab('weight');
-  });
-
-  document.getElementById('calc-btn').addEventListener('click', function() {
-    var age = parseFloat(document.getElementById('age').value);
-    var ft = parseFloat(document.getElementById('ft').value) || 0;
-    var inc = parseFloat(document.getElementById('in').value) || 0;
-    var wt = parseFloat(document.getElementById('wt').value);
-    var act = parseFloat(document.getElementById('act').value);
-    if (!age || !ft || !wt || !act) { alert('Please fill in all fields.'); return; }
-    var kg = wt * 0.453592;
-    var cm = ((ft*12)+inc) * 2.54;
-    var bmr = sex === 'male' ? (10*kg)+(6.25*cm)-(5*age)+5 : (10*kg)+(6.25*cm)-(5*age)-161;
-    var tdee = bmr * act;
-    var cal = Math.round(tdee - 500);
-    var pro = Math.round(wt * 0.85);
-    var carb = Math.round((cal*0.40)/4);
-    var fat = Math.round((cal*0.30)/9);
-    var water = Math.round(wt * 0.5);
-    var hm = cm/100;
-    var bmi = (kg/(hm*hm)).toFixed(1);
-    document.getElementById('r-cal').textContent = cal.toLocaleString();
-    document.getElementById('r-pro').textContent = pro;
-    document.getElementById('r-carb').textContent = carb;
-    document.getElementById('r-fat').textContent = fat;
-    document.getElementById('r-sugar').textContent = sex === 'male' ? 36 : 25;
-    document.getElementById('r-water').textContent = water + ' oz';
-    document.getElementById('r-cups').textContent = Math.round(water/8);
-    document.getElementById('r-bottles').textContent = Math.round(water/16);
-    document.getElementById('r-liters').textContent = (water*0.0296).toFixed(1);
-    document.getElementById('r-3m').textContent = Math.round(pro/3) + 'g';
-    document.getElementById('r-4m').textContent = Math.round(pro/4) + 'g';
-    document.getElementById('r-5pct').textContent = Math.round(wt*0.05) + ' lbs';
-    document.getElementById('r-10pct').textContent = Math.round(wt*0.10) + ' lbs';
-    document.getElementById('r-bmi').textContent = bmi;
-    var cat, cc, cb, ptr;
-    if (bmi<18.5){cat='Underweight';cc='#2b6cb0';cb='#ebf8ff';ptr=5;}
-    else if (bmi<25){cat='Normal Weight';cc='#276749';cb='#f0fff4';ptr=25;}
-    else if (bmi<30){cat='Overweight';cc='#744210';cb='#fffff0';ptr=55;}
-    else if (bmi<35){cat='Obese Class I';cc='#c05621';cb='#fff5f0';ptr=72;}
-    else{cat='Obese Class II+';cc='#9b2c2c';cb='#fff5f5';ptr=90;}
-    var ce = document.getElementById('r-bmi-cat');
-    ce.textContent = cat; ce.style.background = cb; ce.style.color = cc;
-    document.getElementById('bmi-dot').style.left = ptr + '%';
-    document.getElementById('check-water-lbl').textContent = water + ' oz · ' + Math.round(water/8) + ' cups · ' + Math.round(water/16) + ' bottles';
-    document.getElementById('check-protein-lbl').textContent = pro + 'g daily · ' + Math.round(pro/3) + 'g per meal (3 meals)';
-    var d = getData();
-    d.lastCalcWeight = wt;
-    saveData(d);
-    document.getElementById('hub-results').style.display = 'block';
-    document.getElementById('hub-results').scrollIntoView({behavior:'smooth', block:'start'});
-  });
-
-  document.getElementById('pc-btn').addEventListener('click', function() {
-    var sw = parseFloat(document.getElementById('pc-start').value);
-    var cw = parseFloat(document.getElementById('pc-current').value);
-    if (!sw || !cw || cw >= sw) { alert('Please enter a starting weight higher than current weight.'); return; }
-    var lost = sw - cw;
-    var pct = ((lost/sw)*100).toFixed(1);
-    document.getElementById('pc-lost').textContent = lost.toFixed(1);
-    document.getElementById('pc-pct').textContent = pct + '%';
-    var ms = pct >= 20 ? '🏆 20%+' : pct >= 15 ? '🥇 15%' : pct >= 10 ? '🥈 10%' : pct >= 5 ? '🥉 5%' : '🎯 Keep going!';
-    document.getElementById('pc-ms').textContent = ms;
-    var msg = pct >= 20 ? 'EXTRAORDINARY! Losing ' + pct + '% is a life-changing achievement!' :
-              pct >= 15 ? 'AMAZING! ' + pct + '% lost — your health has transformed!' :
-              pct >= 10 ? 'INCREDIBLE! Losing ' + pct + '% has dramatically improved your health!' :
-              pct >= 5 ? 'GREAT WORK! Losing ' + pct + '% has already improved your health markers!' :
-              'Every pound counts! You have lost ' + lost.toFixed(1) + ' lbs — keep going!';
-    document.getElementById('pc-msg').textContent = msg;
-    document.getElementById('pc-results').style.display = 'block';
-  });
-
-  document.getElementById('tl-btn').addEventListener('click', function() {
-    var gw = parseFloat(document.getElementById('tl-goal').value);
-    var cw = parseFloat(document.getElementById('wt').value);
-    if (!gw || !cw || gw >= cw) { alert('Please calculate your targets first then enter a goal weight lower than your current weight.'); return; }
-    var tolose = cw - gw;
-    var months = Math.round(tolose / 4.3);
-    document.getElementById('tl-months').textContent = months;
-    document.getElementById('tl-sub').textContent = 'losing ~' + tolose + ' lbs at 1 lb/week pace';
-    document.getElementById('tl-1m').textContent = Math.min(4, tolose) + ' lbs';
-    document.getElementById('tl-3m').textContent = Math.min(13, tolose) + ' lbs';
-    document.getElementById('tl-6m').textContent = Math.min(26, tolose) + ' lbs';
-    var msg = months <= 3 ? 'You are so close — this is absolutely achievable!' :
-              months <= 6 ? 'Six months of consistency will transform your health.' :
-              months <= 12 ? 'One year from now you will be glad you started today.' :
-              'Every pound lost improves your health. Progress beats perfection.';
-    document.getElementById('tl-msg').textContent = msg;
-    document.getElementById('tl-results').style.display = 'block';
-  });
-}
-
-function setupWeightListeners() {
-  document.getElementById('wt-log-btn').addEventListener('click', function() {
-    var wt = parseFloat(document.getElementById('wt-log-input').value);
-    if (!wt) { alert('Please enter your weight.'); return; }
-    var d = getData();
-    if (!d.weights) d.weights = {};
-    d.weights[weekKey()] = wt;
-    d.lastCalcWeight = wt;
-    saveData(d);
-    document.getElementById('wt-log-input').value = '';
-    document.getElementById('wt').value = wt;
-    document.getElementById('pc-current').value = wt;
+    setWelcome(d.name);
+    prefillHub();
     renderWeightTab();
-    var btn = document.getElementById('wt-log-btn');
-    btn.textContent = '✅ Weight Logged!';
-    btn.style.background = '#5AAD3F';
-    setTimeout(function() { btn.textContent = 'Log My Weight'; btn.style.background = ''; }, 2000);
-  });
-
-  document.getElementById('wt-hist-btn').addEventListener('click', function() {
-    var p = document.getElementById('wt-hist-panel');
-    var open = p.classList.contains('show');
-    p.className = open ? 'hist-panel' : 'hist-panel show';
-    this.textContent = open ? '📅 View Weight History' : '📅 Hide Weight History';
-  });
-}
-
-function setupStepListeners() {
-  document.getElementById('step-goal-btn').addEventListener('click', function() {
-    var g = parseInt(document.getElementById('step-goal-input').value);
-    if (!g || g < 100) { alert('Please enter a valid step goal.'); return; }
-    var d = getData();
-    d.stepGoal = g;
-    saveData(d);
-    renderStepsTab();
-  });
-
-  document.getElementById('step-log-btn').addEventListener('click', function() {
-    var s = parseInt(document.getElementById('step-log-input').value);
-    if (!s || s < 0) { alert('Please enter a valid step count.'); return; }
-    var d = getData();
-    if (!d.steps) d.steps = {};
-    d.steps[todayKey()] = s;
-    saveData(d);
-    document.getElementById('step-log-input').value = '';
-    renderStepsTab();
-  });
-
-  document.getElementById('step-hist-btn').addEventListener('click', function() {
-    var p = document.getElementById('step-hist-panel');
-    var open = p.classList.contains('show');
-    p.className = open ? 'hist-panel' : 'hist-panel show';
-    this.textContent = open ? '📅 View 90-Day Step History' : '📅 Hide Step History';
-  });
-}
-
-function toggleCheck(type) {
-  var row = document.getElementById('check-' + type);
-  var cm = document.getElementById('cm-' + type);
-  var done = cm.classList.contains('done');
-  var d = getData();
-  if (!d.checklist) d.checklist = {};
-  var today = todayKey();
-  if (!d.checklist[today]) d.checklist[today] = {};
-  if (done) {
-    cm.classList.remove('done'); cm.textContent = ''; row.classList.remove('checked');
-    d.checklist[today][type] = false;
-  } else {
-    cm.classList.add('done'); cm.textContent = '✓'; row.classList.add('checked');
-    d.checklist[today][type] = true;
+    updateChecklistUI(d);
+    if(d.stepGoal) document.getElementById('step-goal-input').value = d.stepGoal;
   }
+}
+function setWelcome(name) {
+  document.getElementById('hdr-welcome').innerHTML = 'Welcome back, <span>'+name+'!</span>';
+}
+function prefillHub() {
+  var d = getData();
+  if(!d.name) return;
+  if(d.birthYear) document.getElementById('hub-age').value = new Date().getFullYear() - d.birthYear;
+  if(d.ft) document.getElementById('hub-ft').value = d.ft;
+  if(d.in !== undefined) document.getElementById('hub-in').value = d.in;
+  if(d.startWeight) document.getElementById('pc-start').value = d.startWeight;
+  var weights = d.weights || {};
+  var keys = Object.keys(weights).sort();
+  if(keys.length > 0) {
+    document.getElementById('hub-wt').value = weights[keys[keys.length-1]];
+    document.getElementById('pc-current').value = weights[keys[keys.length-1]];
+  } else if(d.startWeight) {
+    document.getElementById('hub-wt').value = d.startWeight;
+    document.getElementById('pc-current').value = d.startWeight;
+  }
+}
+document.getElementById('ob-btn').addEventListener('click', function() {
+  var name = document.getElementById('ob-name').value.trim();
+  var wt = parseFloat(document.getElementById('ob-weight').value);
+  var yr = parseFloat(document.getElementById('ob-year').value);
+  var ft = parseFloat(document.getElementById('ob-ft').value);
+  var inc = parseFloat(document.getElementById('ob-in').value)||0;
+  var cy = new Date().getFullYear();
+  if(!name||!wt||!yr||yr<1920||yr>cy||!ft) { alert('Please fill in all fields with valid information.'); return; }
+  var d = getData();
+  d.name=name; d.startWeight=wt; d.birthYear=yr; d.ft=ft; d.in=inc;
+  if(!d.weights) d.weights={};
+  d.weights[weekKey()] = wt;
   saveData(d);
-  updateChecklistUI(d);
-}
-
-function updateChecklistUI(d) {
-  if (!d) d = getData();
-  var checklist = d.checklist || {};
-  var today = todayKey();
-  var todayData = checklist[today] || {};
-  var waterDone = todayData['water'] === true;
-  var proteinDone = todayData['protein'] === true;
-  var cmW = document.getElementById('cm-water');
-  var cmP = document.getElementById('cm-protein');
-  var rowW = document.getElementById('check-water');
-  var rowP = document.getElementById('check-protein');
-  if (cmW && rowW) { cmW.className = 'checkmark' + (waterDone ? ' done' : ''); cmW.textContent = waterDone ? '✓' : ''; rowW.className = 'check-row' + (waterDone ? ' checked' : ''); }
-  if (cmP && rowP) { cmP.className = 'checkmark' + (proteinDone ? ' done' : ''); cmP.textContent = proteinDone ? '✓' : ''; rowP.className = 'check-row' + (proteinDone ? ' checked' : ''); }
-  var msgEl = document.getElementById('checklist-msg');
-  if (msgEl) {
-    if (waterDone && proteinDone) { msgEl.textContent = '🎉 Amazing! You hit both goals today!'; msgEl.style.background = 'var(--green-light)'; msgEl.style.color = 'var(--green-dark)'; }
-    else if (waterDone || proteinDone) { msgEl.textContent = '👍 Great start! One more goal to go!'; msgEl.style.background = 'var(--blue-light)'; msgEl.style.color = 'var(--blue)'; }
-    else { msgEl.textContent = 'Tap each item when you have completed it today!'; msgEl.style.background = 'var(--gray)'; msgEl.style.color = 'var(--gray-dark)'; }
-  }
-  var waterStreak = 0; var proteinStreak = 0;
-  for (var i = 0; i < 365; i++) { var k = getDayKey(i); var dd = checklist[k] || {}; if (dd['water'] === true) waterStreak++; else if (i > 0) break; }
-  for (var j = 0; j < 365; j++) { var k2 = getDayKey(j); var dd2 = checklist[k2] || {}; if (dd2['protein'] === true) proteinStreak++; else if (j > 0) break; }
-  var wsEl = document.getElementById('water-streak-val');
-  var psEl = document.getElementById('protein-streak-val');
-  if (wsEl) wsEl.textContent = waterStreak;
-  if (psEl) psEl.textContent = proteinStreak;
-}
-
-function renderWeightTab() {
-  var d = getData();
-  var weights = d.weights || {};
-  var startWt = d.startWeight || 0;
-  var keys = Object.keys(weights).sort();
-  var latest = keys.length > 0 ? weights[keys[keys.length-1]] : startWt;
-  var lost = startWt > 0 ? (startWt - latest).toFixed(1) : '--';
-  var pct = startWt > 0 ? ((startWt - latest) / startWt * 100).toFixed(1) + '%' : '--%';
-  document.getElementById('wt-stat-lost').textContent = lost;
-  document.getElementById('wt-stat-pct').textContent = pct;
-  document.getElementById('wt-stat-entries').textContent = keys.length;
-  var reminderEl = document.getElementById('wt-reminder');
-  if (keys.length > 0) {
-    var lastKey = keys[keys.length-1];
-    var lastDate = new Date(lastKey);
-    var now = new Date();
-    var daysDiff = Math.floor((now - lastDate) / (1000*60*60*24));
-    if (daysDiff >= 7) { reminderEl.style.display = 'flex'; document.getElementById('wt-reminder-msg').textContent = 'Time for your weekly weigh-in! Your last log was ' + daysDiff + ' days ago.'; }
-    else { reminderEl.style.display = 'none'; }
-  }
-  var streak = 0;
-  var checkWeek = new Date();
-  for (var i = 0; i < 13; i++) {
-    var mon = new Date(checkWeek);
-    var day = mon.getDay();
-    var diff = mon.getDate() - day + (day === 0 ? -6 : 1);
-    mon.setDate(diff);
-    var wk = mon.getFullYear() + '-' + pad(mon.getMonth()+1) + '-' + pad(mon.getDate());
-    if (weights[wk]) { streak++; checkWeek.setDate(checkWeek.getDate() - 7); } else break;
-  }
-  document.getElementById('wt-streak').textContent = streak;
-  var sm = streak === 0 ? 'Log your first weight to start your streak!' : streak < 4 ? 'Great start! Keep logging weekly!' : streak < 8 ? 'You are building a great habit!' : '🏆 Incredible consistency — ' + streak + ' weeks strong!';
-  document.getElementById('wt-streak-msg').textContent = sm;
-  var chartEl = document.getElementById('wt-chart');
-  chartEl.innerHTML = '';
-  var recentKeys = keys.slice(-13);
-  var vals = recentKeys.map(function(k) { return weights[k]; });
-  var minV = vals.length > 0 ? Math.min.apply(null, vals) - 5 : 0;
-  var maxV = vals.length > 0 ? Math.max.apply(null, vals) + 5 : 100;
-  for (var i2 = 0; i2 < recentKeys.length; i2++) {
-    var v = weights[recentKeys[i2]];
-    var h = Math.max(5, Math.round(((v - minV) / (maxV - minV)) * 100));
-    var barH = Math.max(5, 100 - h);
-    var isLatest = i2 === recentKeys.length - 1;
-    var col = document.createElement('div');
-    col.className = 'wbar-col';
-    col.innerHTML = '<div class="wbar' + (isLatest ? ' latest' : '') + '" style="height:' + barH + '%"></div><div class="wbar-lbl">W' + (i2+1) + '</div>';
-    chartEl.appendChild(col);
-  }
-  var listEl = document.getElementById('wt-hist-list');
-  listEl.innerHTML = '';
-  var sortedKeys = keys.slice().reverse();
-  if (sortedKeys.length === 0) { listEl.innerHTML = '<div style="text-align:center;color:#a0aec0;padding:20px;font-size:13px;">No weight logs yet!</div>'; return; }
-  for (var j = 0; j < sortedKeys.length; j++) {
-    var k = sortedKeys[j];
-    var w = weights[k];
-    var prev = j < sortedKeys.length - 1 ? weights[sortedKeys[j+1]] : null;
-    var change = prev ? (w - prev).toFixed(1) : null;
-    var item = document.createElement('div');
-    item.className = 'wh-item' + (j === 0 ? ' latest-entry' : '');
-    var changeHtml = change ? '<span class="wh-change ' + (parseFloat(change) <= 0 ? 'down' : 'up') + '">' + (parseFloat(change) > 0 ? '+' : '') + change + ' lbs</span>' : '';
-    item.innerHTML = '<span class="wh-date">' + (j === 0 ? 'Latest · ' : '') + formatDate(k) + '</span><span><span class="wh-val">' + w + ' lbs</span>' + changeHtml + '</span>';
-    listEl.appendChild(item);
-  }
-}
-
-function renderStepsTab() {
-  var d = getData();
-  var goal = d.stepGoal || 8000;
-  var steps = d.steps || {};
-  var today = steps[todayKey()] || 0;
-  document.getElementById('step-goal-input').value = goal;
-  document.getElementById('step-goal-display').textContent = goal.toLocaleString();
-  document.getElementById('step-today').textContent = today.toLocaleString();
-  var pct = Math.min(100, Math.round((today / goal) * 100));
-  document.getElementById('step-ring-pct').textContent = pct + '%';
-  var circ = 283;
-  var offset = circ - (circ * pct / 100);
-  var ring = document.getElementById('step-ring');
-  ring.setAttribute('stroke-dashoffset', offset);
-  ring.style.stroke = pct >= 100 ? '#5AAD3F' : '#2B5BA8';
-  var msgEl = document.getElementById('step-msg');
-  if (today === 0) { msgEl.textContent = 'Enter your steps to track your progress!'; msgEl.className = 'day-msg'; }
-  else if (pct < 50) { msgEl.textContent = 'Great start! Keep moving! 💪'; msgEl.className = 'day-msg'; }
-  else if (pct < 100) { msgEl.textContent = 'Almost there! You are doing amazing! 🌟'; msgEl.className = 'day-msg'; }
-  else { msgEl.textContent = '🎉 GOAL REACHED! Outstanding work today!'; msgEl.className = 'day-msg great'; }
-  var keys = Object.keys(steps).sort();
-  var weekTotal = 0; var allTotal = 0;
-  for (var i = 0; i < Math.min(7, keys.length); i++) weekTotal += steps[keys[keys.length-1-i]];
-  for (var j = 0; j < keys.length; j++) allTotal += steps[keys[j]];
-  var avg = keys.length > 0 ? Math.round(allTotal / keys.length) : 0;
-  document.getElementById('step-stat-week').textContent = Math.round(weekTotal/1000*10)/10 + 'k';
-  document.getElementById('step-stat-avg').textContent = Math.round(avg/1000*10)/10 + 'k';
-  document.getElementById('step-stat-days').textContent = keys.length;
-  var streak = 0;
-  var checkDate = new Date();
-  if (!steps[todayKey()]) checkDate.setDate(checkDate.getDate() - 1);
-  for (var k2 = 0; k2 < 365; k2++) {
-    var key = checkDate.getFullYear() + '-' + pad(checkDate.getMonth()+1) + '-' + pad(checkDate.getDate());
-    if (steps[key] && steps[key] >= goal) { streak++; checkDate.setDate(checkDate.getDate()-1); } else break;
-  }
-  document.getElementById('step-streak').textContent = streak;
-  var sm = streak === 0 ? 'Log your first day to start your streak!' : streak < 7 ? 'Building momentum! ' + (7-streak) + ' days to a week streak!' : streak < 30 ? 'You are on fire! ' + streak + ' days strong!' : '🏆 Incredible! ' + streak + ' day streak!';
-  document.getElementById('step-streak-msg').textContent = sm;
-  var chartEl = document.getElementById('step-chart');
-  chartEl.innerHTML = '';
-  var maxS = goal;
-  for (var d2 = 29; d2 >= 0; d2--) { var dk = getDayKey(d2); if (steps[dk] && steps[dk] > maxS) maxS = steps[dk]; }
-  for (var d3 = 29; d3 >= 0; d3--) {
-    var dk2 = getDayKey(d3);
-    var s = steps[dk2] || 0;
-    var h2 = maxS > 0 ? Math.max(2, Math.round((s/maxS)*100)) : 2;
-    var bc = d3 === 0 ? 'today' : (s >= goal ? 'hit' : 'miss');
-    var col = document.createElement('div');
-    col.className = 'sbar-col';
-    col.innerHTML = '<div class="sbar ' + bc + '" style="height:' + h2 + '%"></div><div class="sbar-day">' + getDayLabel(d3) + '</div>';
-    chartEl.appendChild(col);
-  }
-  var listEl = document.getElementById('step-hist-list');
-  listEl.innerHTML = '';
-  var sortedKeys = Object.keys(steps).sort().reverse().slice(0, 90);
-  if (sortedKeys.length === 0) { listEl.innerHTML = '<div style="text-align:center;color:#a0aec0;padding:20px;font-size:13px;">No step history yet!</div>'; return; }
-  sortedKeys.forEach(function(k) {
-    var hit = steps[k] >= goal;
-    var item = document.createElement('div');
-    item.className = 'hist-item' + (hit ? ' hit' : '');
-    item.innerHTML = '<span class="hist-date">' + formatDate(k) + '</span><span><span class="hist-val">' + steps[k].toLocaleString() + ' steps</span> ' + (hit ? '✅' : '➖') + '</span>';
-    listEl.appendChild(item);
-  });
-  updateChecklistUI(getData());
-}
-
-function renderProgressTab() {
-  var d = getData();
-  var startWt = d.startWeight || 0;
-  var weights = d.weights || {};
-  var steps = d.steps || {};
-  var keys = Object.keys(weights).sort();
-  var latest = keys.length > 0 ? weights[keys[keys.length-1]] : startWt;
-  var lost = startWt > 0 ? parseFloat((startWt - latest).toFixed(1)) : 0;
-  var pct = startWt > 0 ? parseFloat(((lost / startWt) * 100).toFixed(1)) : 0;
-  document.getElementById('prog-name').textContent = (d.name ? d.name + '\'s' : 'Your') + ' Progress';
-  document.getElementById('prog-lost').textContent = lost > 0 ? lost : '--';
-  document.getElementById('prog-pct').textContent = pct > 0 ? pct + '%' : '--%';
-  document.getElementById('prog-start').textContent = startWt ? startWt + ' lbs' : '--';
-  document.getElementById('prog-current').textContent = latest ? latest + ' lbs' : '--';
-  document.getElementById('prog-weigh-ins').textContent = keys.length;
-  var goal = d.stepGoal || 8000;
-  var streak = 0;
-  var checkDate = new Date();
-  if (!steps[todayKey()]) checkDate.setDate(checkDate.getDate()-1);
-  for (var i = 0; i < 365; i++) {
-    var key = checkDate.getFullYear() + '-' + pad(checkDate.getMonth()+1) + '-' + pad(checkDate.getDate());
-    if (steps[key] && steps[key] >= goal) { streak++; checkDate.setDate(checkDate.getDate()-1); } else break;
-  }
-  document.getElementById('prog-streak').textContent = streak + ' days';
-  ['5','10','15','20','25','30','35','40','45','50'].forEach(function(n) {
-    var el = document.getElementById('badge-' + n);
-    if (el) el.className = 'badge-item' + (pct >= parseFloat(n) ? ' earned' : '');
-  });
-  var msg;
-  if (lost <= 0) { msg = 'Log your weight in the Weight tab to see your progress here! You have got this!'; }
-  else if (pct >= 20) { msg = '🏆 ' + (d.name || 'You') + ', you have achieved something truly extraordinary! ' + lost + ' lbs lost and ' + pct + '% of your body weight gone. You are an inspiration!'; }
-  else if (pct >= 15) { msg = '🥇 ' + (d.name || 'You') + ', you are absolutely crushing it! ' + lost + ' lbs lost — your health has been transformed. Keep going!'; }
-  else if (pct >= 10) { msg = '🥈 Amazing work, ' + (d.name || 'friend') + '! Losing ' + pct + '% has dramatically improved your blood pressure, blood sugar, and energy. You should be so proud!'; }
-  else if (pct >= 5) { msg = '🥉 Fantastic, ' + (d.name || 'friend') + '! You have hit your first major milestone — ' + lost + ' lbs lost! Your body is already thanking you for every pound.'; }
-  else { msg = 'Every step forward matters, ' + (d.name || 'friend') + '! You have lost ' + lost + ' lbs so far. Keep going — your best results are ahead of you!'; }
-  document.getElementById('prog-enc').innerHTML = '<p>' + msg + '</p>';
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-  var resetBtn = document.getElementById('reset-btn');
-  if (resetBtn) {
-    resetBtn.onclick = function() {
-      if (window.confirm('This will erase all your saved data. Are you sure?')) {
-        try { localStorage.removeItem('pg_wellness'); } catch(e) {}
-        _memStore = {};
-        window.location.reload();
-      }
-    };
-  }
-  setupHubListeners();
-  setupWeightListeners();
-  setupStepListeners();
-  var d = getData();
-  if (d.stepGoal) document.getElementById('step-goal-input').value = d.stepGoal;
-  updateChecklistUI(d);
-  initApp();
+  document.getElementById('onboard-section').style.display = 'none';
+  document.getElementById('hub-content').style.display = 'block';
+  setWelcome(name);
+  prefillHub();
+  switchTab('weight');
+});
+var sex = 'male';
+document.getElementById('bm').addEventListener('click', function() { sex='male'; document.getElementById('bm').className='gbtn on'; document.getElementById('bf').className='gbtn'; });
+document.getElementById('bf').addEventListener('click', function() { sex='female'; document.getElementById('bm').className='gbtn'; document.getElementById('bf').className='gbtn on'; });
+document.getElementById('calc-btn').addEventListener('click', function() {
+  var age=parseFloat(document.getElementById('hub-age').value);
+  var ft=parseFloat(document.getElementById('hub-ft').value)||0;
+  var inc=parseFloat(document.getElementById('hub-in').value)||0;
+  var wt=parseFloat(document.getElementById('hub-wt').value);
+  var act=parseFloat(document.getElementById('hub-act').value);
+  if(!age||!ft||!wt||!act) { alert('Please fill in all fields.'); return; }
+  var kg=wt*0.453592, cm=((ft*12)+inc)*2.54;
+  var bmr=sex==='male'?(10*kg)+(6.25*cm)-(5*age)+5:(10*kg)+(6.25*cm)-(5*age)-161;
+  var cal=Math.round(bmr*act-500);
+  var pro=Math.round(wt*0.85), carb=Math.round((cal*0.4)/4), fat=Math.round((cal*0.3)/9);
+  var water=Math.round(wt*0.5), hm=cm/100, bmi=(kg/(hm*hm)).toFixed(1);
+  document.getElementById('r-cal').textContent=cal.toLocaleString();
+  document.getElementById('r-pro').textContent=pro;
+  document.getElementById('r-carb').textContent=carb;
+  document.getElementById('r-fat').textContent=fat;
+  document.getElementById('r-sugar').textContent=sex==='male'?36:25;
+  document.getElementById('r-water').textContent=water+' oz';
+  document.getElementById('r-cups').textContent=Math.round(water/8);
+  document.getElementById('r-bottles').textContent=Math.round(water/16);
+  document.getElementById('r-liters').textContent=(water*0.0296).toFixed(1);
+  document.getElementById('r-3m').textContent=Math.round(pro/3)+'g';
+  document.getElementById('r-4m').textContent=Math.round(pro/4)+'g';
+  document.getElementById('r-5pct').textContent=Math.round(wt*0.05)+' lbs';
+  document.getElementById('r-10pct').textContent=Math.round(wt*0.10)+' lbs';
+  document.getElementById('r-bmi').textContent=bmi;
+  var cat,cc,cb,ptr;
+  if(bmi<18.5){cat='Underweight';cc='#2b6cb0';cb='#ebf8ff';ptr=5;}
+  else if(bmi<25){cat='Normal Weight';cc='#276749';cb='#f0fff4';ptr=25;}
+  else if(bmi<30){cat='Overweight';cc='#744210';cb='#fffff0';ptr=55;}
+  else if(bmi<35){cat='Obese Class I';cc='#c05621';cb='#fff5f0';ptr=72;}
+  else{cat='Obese Class II+';cc='#9b2c2c';cb='#fff5f5';ptr=90;}
+  var ce=document.getElementById('r-bmi-cat');
+  ce.textContent=cat; ce.style.background=cb; ce.style.color=cc;
+  document.getElementById('bmi-dot').style.left=ptr+'%';
+  document.getElementById('check-water-lbl').textContent=water+' oz · '+Math.round(water/8)+' cups · '+Math.round(water/16)+' bottles';
+  document.getElementById('check-protein-lbl').textContent=pro+'g daily · '+Math.round(pro/3)+'g per meal (3 meals)';
+  var d=getData(); d.lastCalcWeight=wt; saveData(d);
+  document.getElementById('hub-results').style.display='block';
+  document.getElementById('hub-results').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('pc-btn').addEventListener('click', function() {
+  var sw=parseFloat(document.getElementById('pc-start').value);
+  var cw=parseFloat(document.getElementById('pc-current').value);
+  if(!sw||!cw||cw>=sw){alert('Please enter a starting weight higher than current weight.');return;}
+  var lost=sw-cw, pct=((lost/sw)*100).toFixed(1);
+  document.getElementById('pc-lost').textContent=lost.toFixed(1);
+  document.getElementById('pc-pct').textContent=pct+'%';
+  var ms=pct>=20?'🏆 20%+':pct>=15?'🥇 15%':pct>=10?'🥈 10%':pct>=5?'🥉 5%':'🎯 Keep going!';
+  document.getElementById('pc-ms').textContent=ms;
+  var msg=pct>=20?'EXTRAORDINARY! Losing '+pct+'% is a life-changing achievement!':pct>=15?'AMAZING! '+pct+'% lost — your health has transformed!':pct>=10?'INCREDIBLE! Losing '+pct+'% has dramatically improved your health!':pct>=5?'GREAT WORK! Losing '+pct+'% has already improved your health markers!':'Every pound counts! You have lost '+lost.toFixed(1)+' lbs — keep going!';
+  document.getElementById('pc-msg').textContent=msg;
+  document.getElementById('pc-results').style.display='block';
+});
+document.getElementById('tl-btn').addEventListener('click', function() {
+  var gw=parseFloat(document.getElementById('tl-goal').value);
+  var cw=parseFloat(document.getElementById('hub-wt').value);
+  if(!gw||!cw||gw>=cw){alert('Please enter a goal weight lower than your current weight.');return;}
+  var tl=cw-gw, mo=Math.round(tl/4.3);
+  document.getElementById('tl-months').textContent=mo;
+  document.getElementById('tl-sub').textContent='losing ~'+tl+' lbs at 1 lb/week pace';
+  document.getElementById('tl-1m').textContent=Math.min(4,tl)+' lbs';
+  document.getElementById('tl-3m').textContent=Math.min(13,tl)+' lbs';
+  document.getElementById('tl-6m').textContent=Math.min(26,tl)+' lbs';
+  var msg=mo<=3?'You are so close — this is absolutely achievable!':mo<=6?'Six months of consistency will transform your health.':mo<=12?'One year from now you will be glad you started today.':'Every pound lost improves your health. Progress beats perfection.';
+  document.getElementById('tl-msg').textContent=msg;
+  document.getElementById('tl-results').style.display='block';
+});
+document.getElementById('go-to-steps-btn').addEventListener('click', function() {
+  switchTab('steps');
+  window.scrollTo(0,0);
+  document.getElementById('main-content').scrollTop=0;
+});
+document.getElementById('go-to-progress-btn').addEventListener('click', function() {
+  switchTab('progress');
+  window.scrollTo(0,0);
+  document.getElementById('main-content').scrollTop=0;
+});
+document.getElementById('go-to-hub-btn').addEventListener('click', function() {
+  switchTab('hub');
+  window.scrollTo(0,0);
+  document.getElementById('main-content').scrollTop=0;
+});
+document.getElementById('wt-log-btn').addEventListener('click', function() {
+  var wt=parseFloat(document.getElementById('wt-log-input').value);
+  if(!wt){alert('Please enter your weight.');return;}
+  var d=getData();
+  if(!d.weights) d.weights={};
+  d.weights[weekKey()]=wt;
+  d.lastCalcWeight=wt;
+  saveData(d);
+  document.getElementById('wt-log-input').value='';
+  document.getElementById('hub-wt').value=wt;
+  document.getElementById('pc-current').value=wt;
+  document.getElementById('wt-logged-msg').style.display='block';
   renderWeightTab();
 });
+document.getElementById('wt-hist-btn').addEventListener('click', function() {
+  var p=document.getElementById('wt-hist-panel');
+  var open=p.classList.contains('show');
+  p.className=open?'hist-panel':'hist-panel show';
+  this.textContent=open?'📅 View Weight History':'📅 Hide Weight History';
+});
+function renderWeightTab() {
+  var d=getData(), weights=d.weights||{}, startWt=d.startWeight||0;
+  var keys=Object.keys(weights).sort();
+  var latest=keys.length>0?weights[keys[keys.length-1]]:startWt;
+  var lost=startWt>0?(startWt-latest).toFixed(1):'--';
+  var pct=startWt>0?((startWt-latest)/startWt*100).toFixed(1)+'%':'--%';
+  document.getElementById('wt-stat-lost').textContent=lost;
+  document.getElementById('wt-stat-pct').textContent=pct;
+  document.getElementById('wt-stat-entries').textContent=keys.length;
+  var rem=document.getElementById('wt-reminder');
+  if(keys.length>0) {
+    var diff=Math.floor((new Date()-new Date(keys[keys.length-1]))/(1000*60*60*24));
+    if(diff>=7){rem.style.display='flex';document.getElementById('wt-reminder-msg').textContent='Time for your weekly weigh-in! Last log was '+diff+' days ago.';}
+    else rem.style.display='none';
+  }
+  var streak=0, cw=new Date();
+  for(var i=0;i<13;i++){
+    var m=new Date(cw), dy=m.getDay(), df=m.getDate()-dy+(dy===0?-6:1);
+    m.setDate(df);
+    var wk=m.getFullYear()+'-'+pad(m.getMonth()+1)+'-'+pad(m.getDate());
+    if(weights[wk]){streak++;cw.setDate(cw.getDate()-7);}else break;
+  }
+  document.getElementById('wt-streak').textContent=streak;
+  document.getElementById('wt-streak-msg').textContent=streak===0?'Log your first weight to start your streak!':streak<4?'Great start! Keep logging weekly!':streak<8?'You are building a great habit!':'🏆 Incredible — '+streak+' weeks strong!';
+  var ch=document.getElementById('wt-chart'); ch.innerHTML='';
+  var rk=keys.slice(-13), vals=rk.map(function(k){return weights[k];});
+  var minV=vals.length>0?Math.min.apply(null,vals)-5:0, maxV=vals.length>0?Math.max.apply(null,vals)+5:100;
+  for(var i2=0;i2<rk.length;i2++){
+    var v=weights[rk[i2]], h=Math.max(5,Math.round(((v-minV)/(maxV-minV))*100));
+    var bh=Math.max(5,100-h), il=i2===rk.length-1;
+    var col=document.createElement('div'); col.className='wbar-col';
+    col.innerHTML='<div class="wbar'+(il?' latest':'')+'" style="height:'+bh+'%"></div><div class="wbar-lbl">W'+(i2+1)+'</div>';
+    ch.appendChild(col);
+  }
+  var le=document.getElementById('wt-hist-list'); le.innerHTML='';
+  var sk=keys.slice().reverse();
+  if(sk.length===0){le.innerHTML='<div style="text-align:center;color:#a0aec0;padding:20px;font-size:13px;">No weight logs yet!</div>';return;}
+  for(var j=0;j<sk.length;j++){
+    var k=sk[j], w=weights[k], prev=j<sk.length-1?weights[sk[j+1]]:null;
+    var ch2=prev?(w-prev).toFixed(1):null;
+    var item=document.createElement('div'); item.className='wh-item'+(j===0?' latest-entry':'');
+    var chHtml=ch2?'<span class="wh-change '+(parseFloat(ch2)<=0?'down':'up')+'">'+(parseFloat(ch2)>0?'+':'')+ch2+' lbs</span>':'';
+    item.innerHTML='<span class="wh-date">'+(j===0?'Latest · ':'')+fmtDate(k)+'</span><span><span class="wh-val">'+w+' lbs</span>'+chHtml+'</span>';
+    le.appendChild(item);
+  }
+}
+document.getElementById('step-goal-btn').addEventListener('click', function() {
+  var g=parseInt(document.getElementById('step-goal-input').value);
+  if(!g||g<100){alert('Please enter a valid step goal.');return;}
+  var d=getData(); d.stepGoal=g; saveData(d); renderStepsTab();
+});
+document.getElementById('step-log-btn').addEventListener('click', function() {
+  var s=parseInt(document.getElementById('step-log-input').value);
+  if(!s||s<0){alert('Please enter a valid step count.');return;}
+  var d=getData(); if(!d.steps) d.steps={};
+  d.steps[todayKey()]=s; saveData(d);
+  document.getElementById('step-log-input').value='';
+  renderStepsTab();
+});
+document.getElementById('step-hist-btn').addEventListener('click', function() {
+  var p=document.getElementById('step-hist-panel');
+  var open=p.classList.contains('show');
+  p.className=open?'hist-panel':'hist-panel show';
+  this.textContent=open?'📅 View 90-Day Step History':'📅 Hide Step History';
+});
+function toggleCheck(type) {
+  var row=document.getElementById('check-'+type), cm=document.getElementById('cm-'+type);
+  var done=cm.classList.contains('done');
+  var d=getData(); if(!d.checklist) d.checklist={};
+  var today=todayKey(); if(!d.checklist[today]) d.checklist[today]={};
+  if(done){cm.classList.remove('done');cm.textContent='';row.classList.remove('checked');d.checklist[today][type]=false;}
+  else{cm.classList.add('done');cm.textContent='✓';row.classList.add('checked');d.checklist[today][type]=true;}
+  saveData(d); updateChecklistUI(d);
+}
+function updateChecklistUI(d) {
+  if(!d) d=getData();
+  var cl=d.checklist||{}, td=cl[todayKey()]||{};
+  var wd=td['water']===true, pd=td['protein']===true;
+  var cmW=document.getElementById('cm-water'), cmP=document.getElementById('cm-protein');
+  var rW=document.getElementById('check-water'), rP=document.getElementById('check-protein');
+  if(cmW&&rW){cmW.className='checkmark'+(wd?' done':'');cmW.textContent=wd?'✓':'';rW.className='check-row'+(wd?' checked':'');}
+  if(cmP&&rP){cmP.className='checkmark'+(pd?' done':'');cmP.textContent=pd?'✓':'';rP.className='check-row'+(pd?' checked':'');}
+  var msg=document.getElementById('checklist-msg');
+  if(msg){
+    if(wd&&pd){msg.textContent='🎉 Amazing! You hit both goals today!';msg.style.background='var(--green-light)';msg.style.color='var(--green-dark)';}
+    else if(wd||pd){msg.textContent='👍 Great start! One more goal to go!';msg.style.background='var(--blue-light)';msg.style.color='var(--blue)';}
+    else{msg.textContent="Tap each item when you've completed it today!";msg.style.background='var(--gray)';msg.style.color='var(--gray-dark)';}
+  }
+  var ws=0,ps=0;
+  for(var i=0;i<365;i++){var k=getDayKey(i),dd=cl[k]||{};if(dd['water']===true)ws++;else if(i>0)break;}
+  for(var j=0;j<365;j++){var k2=getDayKey(j),dd2=cl[k2]||{};if(dd2['protein']===true)ps++;else if(j>0)break;}
+  var wse=document.getElementById('water-streak-val'), pse=document.getElementById('protein-streak-val');
+  if(wse) wse.textContent=ws;
+  if(pse) pse.textContent=ps;
+}
+function renderStepsTab() {
+  var d=getData(), goal=d.stepGoal||8000, steps=d.steps||{}, today=steps[todayKey()]||0;
+  document.getElementById('step-goal-input').value=goal;
+  document.getElementById('step-goal-display').textContent=goal.toLocaleString();
+  document.getElementById('step-today').textContent=today.toLocaleString();
+  var pct=Math.min(100,Math.round((today/goal)*100));
+  document.getElementById('step-ring-pct').textContent=pct+'%';
+  var ring=document.getElementById('step-ring');
+  ring.setAttribute('stroke-dashoffset',283-(283*pct/100));
+  ring.style.stroke=pct>=100?'#5AAD3F':'#2B5BA8';
+  var me=document.getElementById('step-msg');
+  if(today===0){me.textContent='Enter your steps to track your progress!';me.className='day-msg';}
+  else if(pct<50){me.textContent='Great start! Keep moving! 💪';me.className='day-msg';}
+  else if(pct<100){me.textContent='Almost there! You are doing amazing! 🌟';me.className='day-msg';}
+  else{me.textContent='🎉 GOAL REACHED! Outstanding work today!';me.className='day-msg great';}
+  var ks=Object.keys(steps).sort(), wt=0, at=0;
+  for(var i=0;i<Math.min(7,ks.length);i++) wt+=steps[ks[ks.length-1-i]];
+  for(var j=0;j<ks.length;j++) at+=steps[ks[j]];
+  var avg=ks.length>0?Math.round(at/ks.length):0;
+  document.getElementById('step-stat-week').textContent=Math.round(wt/1000*10)/10+'k';
+  document.getElementById('step-stat-avg').textContent=Math.round(avg/1000*10)/10+'k';
+  document.getElementById('step-stat-days').textContent=ks.length;
+  var streak=0, cd=new Date();
+  if(!steps[todayKey()]) cd.setDate(cd.getDate()-1);
+  for(var k2=0;k2<365;k2++){
+    var key=cd.getFullYear()+'-'+pad(cd.getMonth()+1)+'-'+pad(cd.getDate());
+    if(steps[key]&&steps[key]>=goal){streak++;cd.setDate(cd.getDate()-1);}else break;
+  }
+  document.getElementById('step-streak').textContent=streak;
+  document.getElementById('step-streak-msg').textContent=streak===0?'Log your first day to start your streak!':streak<7?'Building momentum! '+(7-streak)+' days to a week streak!':streak<30?'You are on fire! '+streak+' days strong!':'🏆 Incredible! '+streak+' day streak!';
+  var ce=document.getElementById('step-chart'); ce.innerHTML='';
+  var mx=goal;
+  for(var d2=29;d2>=0;d2--){var dk=getDayKey(d2);if(steps[dk]&&steps[dk]>mx)mx=steps[dk];}
+  for(var d3=29;d3>=0;d3--){
+    var dk2=getDayKey(d3), s=steps[dk2]||0;
+    var h=mx>0?Math.max(2,Math.round((s/mx)*100)):2;
+    var bc=d3===0?'today':(s>=goal?'hit':'miss');
+    var col=document.createElement('div'); col.className='sbar-col';
+    col.innerHTML='<div class="sbar '+bc+'" style="height:'+h+'%"></div><div class="sbar-day">'+getDayLbl(d3)+'</div>';
+    ce.appendChild(col);
+  }
+  var sl=document.getElementById('step-hist-list'); sl.innerHTML='';
+  var sk2=Object.keys(steps).sort().reverse().slice(0,90);
+  if(sk2.length===0){sl.innerHTML='<div style="text-align:center;color:#a0aec0;padding:20px;font-size:13px;">No step history yet!</div>';return;}
+  sk2.forEach(function(k){
+    var hit=steps[k]>=goal, item=document.createElement('div');
+    item.className='hist-item'+(hit?' hit':'');
+    item.innerHTML='<span class="hist-date">'+fmtDate(k)+'</span><span><span class="hist-val">'+steps[k].toLocaleString()+' steps</span> '+(hit?'✅':'➖')+'</span>';
+    sl.appendChild(item);
+  });
+  updateChecklistUI(d);
+}
+function renderProgressTab() {
+  var d=getData(), startWt=d.startWeight||0, weights=d.weights||{}, steps=d.steps||{};
+  var keys=Object.keys(weights).sort();
+  var latest=keys.length>0?weights[keys[keys.length-1]]:startWt;
+  var lost=startWt>0?parseFloat((startWt-latest).toFixed(1)):0;
+  var pct=startWt>0?parseFloat(((lost/startWt)*100).toFixed(1)):0;
+  document.getElementById('prog-name').textContent=(d.name?d.name+"'s":'Your')+' Progress';
+  document.getElementById('prog-lost').textContent=lost>0?lost:'--';
+  document.getElementById('prog-pct').textContent=pct>0?pct+'%':'--%';
+  document.getElementById('prog-start').textContent=startWt?startWt+' lbs':'--';
+  document.getElementById('prog-current').textContent=latest?latest+' lbs':'--';
+  document.getElementById('prog-weigh-ins').textContent=keys.length;
+  var goal=d.stepGoal||8000, streak=0, cd=new Date();
+  if(!steps[todayKey()]) cd.setDate(cd.getDate()-1);
+  for(var i=0;i<365;i++){
+    var key=cd.getFullYear()+'-'+pad(cd.getMonth()+1)+'-'+pad(cd.getDate());
+    if(steps[key]&&steps[key]>=goal){streak++;cd.setDate(cd.getDate()-1);}else break;
+  }
+  document.getElementById('prog-step-streak').textContent=streak+' days';
+  ['5','10','15','20','25','30','35','40','45','50'].forEach(function(n){
+    var el=document.getElementById('badge-'+n);
+    if(el) el.className='badge-item'+(pct>=parseFloat(n)?' earned':'');
+  });
+  var msg;
+  if(lost<=0) msg='Log your weight in the Weight tab to see your progress here!';
+  else if(pct>=20) msg='🏆 '+(d.name||'You')+', you have achieved something truly extraordinary! '+lost+' lbs lost and '+pct+'% of your body weight gone. You are an inspiration!';
+  else if(pct>=15) msg='🥇 '+(d.name||'You')+', you are absolutely crushing it! '+lost+' lbs lost. Your health has been transformed. Keep going!';
+  else if(pct>=10) msg='🥈 Amazing work, '+(d.name||'friend')+'! Losing '+pct+'% has dramatically improved your blood pressure, blood sugar, and energy!';
+  else if(pct>=5) msg='🥉 Fantastic, '+(d.name||'friend')+'! You have hit your first major milestone — '+lost+' lbs lost! Your body is already thanking you.';
+  else msg='Every step forward matters, '+(d.name||'friend')+'! You have lost '+lost+' lbs so far. Keep going — your best results are ahead!';
+  document.getElementById('prog-enc').innerHTML='<p>'+msg+'</p>';
+}
+document.getElementById('reset-btn').onclick = function() {
+  if(window.confirm('This will erase all your saved data. Are you sure?')) {
+    try { localStorage.removeItem('pgw'); } catch(e) {}
+    _mem = {};
+    window.location.reload();
+  }
+};
+window.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
